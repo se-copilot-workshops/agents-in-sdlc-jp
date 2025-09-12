@@ -29,7 +29,7 @@ Copilot のエージェントモードは、より自律的に動作するよう
 サイトの起動を簡単にするため、フロントエンドとバックエンドの両サーバーを起動するスクリプトを用意しています。GitHub Codespace で次の手順に従ってスクリプトを実行し、サイトを起動します。
 
 1. Codespace に戻ります。現在のブランチで作業を続けます。
-2. Codespace 内で <kbd>Ctl</kbd>+<kbd>\`</kbd> を押して新しいターミナルを開きます。
+2. Codespace 内で <kbd>Ctrl</kbd>+<kbd>\`</kbd> を押して新しいターミナルを開きます。
 3. 次のスクリプトを実行してサイトを起動します（権限エラーが出たら Copilot に助けを求めてください）。
 
    ```bash
@@ -56,7 +56,7 @@ Copilot のエージェントモードは、より自律的に動作するよう
 サイトが起動したら、機能を確認してみましょう。主な機能は次のとおりです。
 
 * **ホームページ**：ボードゲームのタイトル、画像、説明の一覧を表示します。
-* **ゲーム詳細ページ**：ゲームを選択すると、タイトル、説明、出版社、カテゴリなど、より詳しい情報が表示されます。
+* **ゲーム詳細ページ**：ゲームを選択すると、タイトル、説明、パブリッシャー、カテゴリなど、より詳しい情報が表示されます。
 
 ## Copilot でバックログを確認する
 
@@ -67,7 +67,7 @@ Copilot のエージェントモードは、より自律的に動作するよう
 3. **New Chat** ボタンを選んで新しいチャットセッションを作成し、以前のコンテキストを消去します。
 4. モード一覧から **Agent** が選択されていることを確認します。
 
-   ![Agent Mode のドロップダウンを表示する Copilot Chat パネルのスクリーンショット](images/copilot-agent-mode-dropdown.png)
+   ![エージェントモードのドロップダウンを表示する Copilot Chat パネルのスクリーンショット](images/copilot-agent-mode-dropdown.png)
 
 5. 利用可能なモデル一覧から **Claude Sonnet 4** を選択します。
 
@@ -110,7 +110,7 @@ Copilot は、ユーザーにとって有用と思われる順に項目を優先
 
 3. **Agent** モードが選択されていることを再確認します。
 
-   ![Agent Mode への切替例を示すスクリーンショット](images/copilot-agent-mode-dropdown.png)
+   ![エージェントモードへの切替例を示すスクリーンショット](images/copilot-agent-mode-dropdown.png)
 
 4. モデルが **Claude Sonnet 4** のままであることを確認します。
 
@@ -166,7 +166,7 @@ Pull Request を作成する方法はいくつかあります（github.com や G
 2. 次のプロンプトで PR 作成を依頼します。**<YOUR_REPOSITORY_PATH>** は organization/name 形式で置き換えてください。
 
    ```plaintext
-   <YOUR_REPOSITORY_PATH>でカテゴリとパブリッシャーによるフィルタリングに関連する問題を特定してください。現在の add-filters ブランチに対して新しいプルリクエストを作成し、それを該当する issue に紐付けてください。
+   <YOUR_REPOSITORY_PATH>でカテゴリとパブリッシャーによるフィルタリングに関連する問題を特定してください。現在の add-filters ブランチに対して新しい Pull Request を作成し、それを該当する issue に紐付けてください。
    ```
 
 3. 必要に応じて **Continue** を選び、情報収集と操作実行を Copilot に許可します。
@@ -201,7 +201,7 @@ Pull Request を作成する方法はいくつかあります（github.com や G
 ---
 
 次の演習に進むには以下のリンクをクリックしてください。
-[次の演習：GitHub Copilot コーディングエージェントの成果をレビューする](./5-reviewing-coding-agent.md)
+[次の演習：GitHub Copilotコーディングエージェントの成果をレビューする](./5-reviewing-coding-agent.md)
 
 [previous-lesson]: ./3-custom-instructions.md
 [next-lesson]: ./5-reviewing-coding-agent.md

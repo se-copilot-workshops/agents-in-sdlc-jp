@@ -20,7 +20,7 @@
 
 GitHub Copilot Chat のエージェントモードは、Copilot をあなたの代わりにアクションを実行できる AI エージェントへと変身させます。このモードでは、より動的に Copilot とやり取りでき、テストやターミナルコマンドの実行、エディタから問題点の読み取り、その洞察を使ったコード更新など、ツールを使用してタスクを実行できます。これにより、より双方向で共同的なワークフローが可能になり、開発プロセスで AI の能力を活用できるようになります。
 
-[Model Context Protocol (MCP)][mcp-blog-post] は、AI エージェントが外部ツールやサービスと通信する方法を提供します。MCP を使用することで、AI エージェントは外部ツールやサービスとリアルタイムに通信できます。これにより、（リソースを使用して）最新の情報にアクセスし、（ツールを使用して）あなたの代わりにアクションを実行できるようになります。
+[Model Context Protocol（MCP）][mcp-blog-post] は、AI エージェントが外部ツールやサービスと通信する方法を提供します。MCP を使用することで、AI エージェントは外部ツールやサービスとリアルタイムに通信できます。これにより、（リソースを使用して）最新の情報にアクセスし、（ツールを使用して）あなたの代わりにアクションを実行できるようになります。
 
 これらのツールやリソースは MCP サーバーを介してアクセスされます。MCP サーバーは AI エージェントと外部ツール・サービスの橋渡し役です。MCP サーバーは、AI エージェントと外部ツール（既存の API や NPM パッケージのようなローカルツールなど）との通信を管理します。各 MCP サーバーは、AI エージェントがアクセスできるツールとリソースの異なるセットを表します。
 
@@ -28,7 +28,7 @@ GitHub Copilot Chat のエージェントモードは、Copilot をあなたの�
 
 よく使われている既存の MCP サーバーの例：
 
-- **[GitHub MCP Server][github-mcp-server]**：GitHub リポジトリを管理するための API 群にアクセスを提供します。新しいリポジトリの作成、既存リポジトリの更新、Issue や Pull Request の管理などを AI エージェントが実行できます。
+- **[GitHub MCP サーバー][github-mcp-server]**：GitHub リポジトリを管理するための API 群にアクセスを提供します。新しいリポジトリの作成、既存リポジトリの更新、Issue や Pull Request の管理などを AI エージェントが実行できます。
 - **[Playwright MCP Server][playwright-mcp-server]**：Playwright を用いたブラウザ自動化機能を提供します。Web ページのナビゲーション、フォーム入力、ボタンクリックなどの操作を AI エージェントが実行できます。
 - **追加の参照サーバー**：他にも多数の MCP サーバーがあり、さまざまなツールやリソースにアクセスできます。Anthropic は参照実装・サードパーティ・コミュニティ実装を含む [MCP サーバーの一覧][anthropic-mcp-servers] を公開しています。 
 
@@ -61,7 +61,7 @@ GitHub Copilot Chat のエージェントモードにアクセスするには、
 
 1. Codespace に戻ります。
 2. Codespace の上部にある **Copilot Chat** アイコンを選択します。
-3. Copilot Chat ウィンドウで「Hello world」のようなメッセージを入力し、Enter を押します。これで Copilot Chat が起動するはずです。
+3. Copilot Chat ウィンドウで「こんにちは！」のようなメッセージを入力し、Enter を押します。これで Copilot Chat が起動するはずです。
 
     ![Copilot Chat の起動例](images/copilot-chat-activation.png)
 
@@ -150,7 +150,7 @@ GitHub MCP サーバーの設定ができたので、エージェントモード
 
 1. Copilot Chat ペインに戻ります。ドロップダウンから **Agent** を選択します。モデルは **Claude Sonnet 4** に設定します。
 
-    ![Agent Mode が選択された Copilot Chat ペインの例](images/copilot-agent-mode-dropdown.png)
+    ![エージェントモードが選択された Copilot Chat ペインの例](images/copilot-agent-mode-dropdown.png)
 
 2. 次のプロンプトを入力または貼り付け、**<YOUR_REPOSITORY_PATH>** をあなたのリポジトリの organization/name 形式のパスに置き換えます：
 
@@ -162,7 +162,7 @@ GitHub MCP サーバーの設定ができたので、エージェントモード
 
     最近の計画ミーティングで決まった直近のバックログは次のとおりです：
 
-    1. ユーザーがカテゴリおよび出版社でゲームをフィルタできるようにする
+    1. ユーザーがカテゴリおよびパブリッシャーでゲームをフィルタできるようにする
     2. リポジトリのコーディング標準（Python のフォーマットや docstring のルールを含む）をカスタム指示ファイルに更新する
     3. ストレッチゴール：ゲーム一覧ページにページネーションを実装する
     ```
@@ -175,13 +175,13 @@ GitHub MCP サーバーの設定ができたので、エージェントモード
 > [!IMPORTANT]
 > AI は誤りを犯す可能性があるため、確定前に内容を必ず見直してください。
 
-5. **Run open new issue** ボックスの **see more** を選択して、作成予定の Issue の詳細を表示します。
+5. **Run open new issue** ボックスの **See more** を選択して、作成予定の Issue の詳細を表示します。
 6. **owner**、**repo**、**title**、**body** の内容が正しいか確認します。必要であれば、本文をダブルクリックして内容を編集できます。
-7. 生成内容を確認したら、**Continue** を選択して Issue を作成します。
+7. 生成内容を確認したら、**Allow** を選択して Issue を作成します。
 
     ![作成される GitHub Issue の詳細が表示されたダイアログの例](images/create-issue-review.png)
 
-8. 残りの Issue についても手順 4〜6 を繰り返します。あるいは、Copilot に自動作成を任せても問題ない場合は、**Continue** の横の下向き矢印を選択し、**Allow in this session** を選択して、このセッション（現在のチャット）に限り Copilot に Issue 作成を自動許可することもできます。
+8. 残りの Issue についても手順 4〜6 を繰り返します。あるいは、Copilot に自動作成を任せても問題ない場合は、**Allow** の横の下向き矢印を選択し、**Allow in this session** を選択して、このセッション（現在のチャット）に限り Copilot に Issue 作成を自動許可することもできます。
 
     ![Copilot に自動作成を許可する例](images/create-issue-allow.png)
 
@@ -220,7 +220,7 @@ Playwright MCP サーバーのインストールと構成手順は、[Playwright
 ## リソース
 
 - [What the heck is MCP and why is everyone talking about it?][mcp-blog-post]
-- [GitHub MCP Server][github-mcp-server]
+- [GitHub MCP サーバー][github-mcp-server]
 - [Microsoft Playwright MCP Server][playwright-mcp-server]
 - [Anthropic MCP Servers][anthropic-mcp-servers]
 - [VS Code 拡張機能][vscode-extensions]

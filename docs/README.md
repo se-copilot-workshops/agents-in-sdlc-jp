@@ -12,11 +12,11 @@ GitHub Copilot の機能拡張により、ソフトウェア開発ライフサ�
 このラボでは、GitHub Copilot のエージェント機能でよくあるワークロードを順を追って体験します。
 
 0. [環境のセットアップ](./0-prereqs.md)
-1. [Issue を GitHub Copilot coding agent に割り当てる](./1-copilot-coding-agent.md)（非同期で作業を進める）
+1. [Issue を GitHub Copilotコーディングエージェントに割り当てる](./1-copilot-coding-agent.md)（非同期で作業を進める）
 2. [Model Context Protocol（MCP）で外部サービスを設定・連携する](./2-mcp.md)
 3. [カスタムインストラクションで Copilot に文脈を与える](./3-custom-instructions.md)（指示ファイル・プロンプトファイル・チャット参加者）
-4. [Copilot Agent Mode を使ってサイト全体の更新を行う](./4-copilot-agent-mode-vscode.md)
-5. [Copilot coding agent の成果をレビューする](./5-reviewing-coding-agent.md)
+4. [Copilot のエージェントモードを使ってサイト全体の更新を行う](./4-copilot-agent-mode-vscode.md)
+5. [Copilotコーディングエージェントの成果をレビューする](./5-reviewing-coding-agent.md)
 
 ## シナリオ
 

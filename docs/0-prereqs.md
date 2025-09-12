@@ -14,7 +14,7 @@
 > [!IMPORTANT]
 > Ownerは **se-copilot-workshops** を選び、リポジトリ名にはご自身の GitHub ハンドルを使用してください。
 
-3. Ownerに **se-copilot-workshops** を選び、リポジトリ名にご自身の GitHub ハンドルを設定します。これにより Copilot coding agent へのアクセスや、Issue を Copilot に割り当てる操作が可能になります。
+3. Ownerに **se-copilot-workshops** を選び、リポジトリ名にご自身の GitHub ハンドルを設定します。これにより Copilotコーディングエージェントへのアクセスや、Issue を Copilot に割り当てる操作が可能になります。
 
     ![テンプレートの作成設定](images/repository-template-settings.png)
 
@@ -43,5 +43,5 @@ Codespace の作成には数分かかります（それでも各種サービス�
 
 ## 次のステップ
 
-数分の余裕があるうちに、Copilot に非同期タスクを任せる準備を進めましょう。Issue を作成し、Copilot coding agent に割り当てます。次の演習へ進むには以下をクリックしてください。
-[次の演習: Copilot Coding Agent](./1-copilot-coding-agent.md)
+数分の余裕があるうちに、Copilot に非同期タスクを任せる準備を進めましょう。Issue を作成し、Copilotコーディングエージェントに割り当てます。次の演習へ進むには以下をクリックしてください。
+[次の演習: Copilotコーディングエージェント](./1-copilot-coding-agent.md)
