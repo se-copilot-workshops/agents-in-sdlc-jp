@@ -81,7 +81,7 @@ Copilot との PR 作業は一方通行ではありません。PR にコメン�
     ![Approve and run workflows](images/ex4-approve-and-run.png)
 
 8. PR のチェック欄にワークフローがキューイングされるはずです。うまくいけば、バックエンドとフロントエンドの両方で成功します。完了まで数分かかることがあります。
-9. **オプション:** このブランチに Codespace から切り替えて、新しいエンドポイントを手動テストすることもできます。Codespace に移動してターミナルを開き、次のコマンドを実行します（**<branch-name>** は Copilot が作成したブランチ名、例：**copilot/fix-8** に置き換え）。
+9. **オプション:** このブランチに Codespace から切り替えて、新しいエンドポイントを手動テストすることもできます。Codespace に移動してターミナルを開き、次のコマンドを実行します（**\<branch-name\>** は Copilot が作成したブランチ名、例：**copilot/fix-8** に置き換え）。
 
     ```bash
     git fetch origin
@@ -125,11 +125,11 @@ Copilot は新しいエンドポイントを作成しました！先ほどと同
 
 
 [github-copilot]: https://github.com/features/copilot
-[coding-agent-overview]: https://docs.github.com/en/copilot/using-github-copilot/coding-agent/about-assigning-tasks-to-copilot#overview-of-copilot-coding-agent
-[assign-issue]: https://docs.github.com/en/copilot/using-github-copilot/coding-agent/using-copilot-to-work-on-an-issue
-[setup-workflow]: https://docs.github.com/en/copilot/using-github-copilot/coding-agent/best-practices-for-using-copilot-to-work-on-tasks#pre-installing-dependencies-in-github-copilots-environment
-[copilot-agents]: https://docs.github.com/en/copilot/using-github-copilot/coding-agent/about-assigning-tasks-to-copilot
-[coding-agent-best-practices]: https://docs.github.com/en/copilot/using-github-copilot/coding-agent/best-practices-for-using-copilot-to-work-on-tasks
-[agent-firewall]: https://docs.github.com/en/copilot/customizing-copilot/customizing-or-disabling-the-firewall-for-copilot-coding-agent
+[coding-agent-overview]: https://docs.github.com/ja/copilot/using-github-copilot/coding-agent/about-assigning-tasks-to-copilot#overview-of-copilot-coding-agent
+[assign-issue]: https://docs.github.com/ja/copilot/using-github-copilot/coding-agent/using-copilot-to-work-on-an-issue
+[setup-workflow]: https://docs.github.com/ja/copilot/using-github-copilot/coding-agent/best-practices-for-using-copilot-to-work-on-tasks#pre-installing-dependencies-in-github-copilots-environment
+[copilot-agents]: https://docs.github.com/ja/copilot/using-github-copilot/coding-agent/about-assigning-tasks-to-copilot
+[coding-agent-best-practices]: https://docs.github.com/ja/copilot/using-github-copilot/coding-agent/best-practices-for-using-copilot-to-work-on-tasks
+[agent-firewall]: https://docs.github.com/ja/copilot/customizing-copilot/customizing-or-disabling-the-firewall-for-copilot-coding-agent
 
 [previous-lesson]: ./4-copilot-agent-mode-vscode.md

@@ -241,6 +241,6 @@ Playwright MCP サーバーのインストールと構成手順は、[Playwright
 [anthropic-mcp-servers]: https://github.com/modelcontextprotocol/servers
 [vscode-extensions]: https://code.visualstudio.com/docs/configure/extensions/extension-marketplace
 [copilot-chat-extension]: https://marketplace.visualstudio.com/items?itemName=GitHub.copilot
-[github-pat-docs]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token
+[github-pat-docs]: https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token
 [remote-github-mcp-server]: https://github.blog/changelog/2025-06-12-remote-github-mcp-server-is-now-available-in-public-preview/
 [vscode-mcp-config]: https://code.visualstudio.com/docs/copilot/chat/mcp-servers#_configuration-format

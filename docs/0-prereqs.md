@@ -4,7 +4,7 @@
 
 ## ラボ用リポジトリの作成
 
-このラボで使うコードのコピーは、リポジトリの[テンプレート機能](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository)を使って作成します。作成したリポジトリにはラボに必要なファイルがすべて含まれ、以降の演習で利用します。
+このラボで使うコードのコピーは、リポジトリの[テンプレート機能](https://docs.github.com/ja/repositories/creating-and-managing-repositories/creating-a-template-repository)を使って作成します。作成したリポジトリにはラボに必要なファイルがすべて含まれ、以降の演習で利用します。
 
 1. 新しいブラウザタブで、このラボの GitHub リポジトリにアクセスします: `https://github.com/se-copilot-workshops/agents-in-sdlc-jp`。ご自身のアカウントでサインインしてください。
 2. リポジトリページの **Use this template** をクリックし、**Create a new repository** を選びます。
