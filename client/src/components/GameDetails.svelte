@@ -39,22 +39,22 @@
                 if (response.ok) {
                     gameData = await response.json();
                 } else {
-                    error = `Failed to fetch game: ${response.status} ${response.statusText}`;
+                    error = `ゲームの取得に失敗しました: ${response.status} ${response.statusText}`;
                 }
             } catch (err) {
-                error = `Error: ${err instanceof Error ? err.message : String(err)}`;
+                error = `エラー: ${err instanceof Error ? err.message : String(err)}`;
             } finally {
                 loading = false;
             }
         } else {
-            error = "No game ID provided";
+            error = "ゲームIDが指定されていません";
             loading = false;
         }
     });
 
     // Function to render stars based on rating
     function renderStarRating(rating: number | null): string {
-        if (rating === null) return "Not yet rated";
+        if (rating === null) return "まだ評価がありません";
         
         const fullStars = Math.floor(rating);
         const halfStar = rating % 1 >= 0.5;
@@ -105,7 +105,7 @@
             </div>
             
             <div class="space-y-4 mt-6">
-                <h2 class="text-lg font-semibold text-slate-200 mb-2">About this game</h2>
+                <h2 class="text-lg font-semibold text-slate-200 mb-2">このゲームについて</h2>
                 <div class="text-slate-400 space-y-4">
                     <p data-testid="game-details-description">{gameData.description}</p>
                 </div>
@@ -116,13 +116,13 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
                     </svg>
-                    Support This Game
+                    このゲームを支援する
                 </button>
             </div>
         </div>
     </div>
 {:else}
     <div class="bg-slate-800/60 backdrop-blur-sm rounded-xl p-6">
-        <p class="text-slate-400">No game information available</p>
+        <p class="text-slate-400">ゲーム情報がありません</p>
     </div>
 {/if}

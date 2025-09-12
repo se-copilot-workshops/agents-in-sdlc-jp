@@ -37,7 +37,7 @@ def create_games():
                 category_name = row['Category']
                 if category_name not in categories:
                     # Create new category if it doesn't exist
-                    category_description = f"Collection of {category_name} games available for crowdfunding"
+                    category_description = f"クラウドファンディングで支援可能な『{category_name}』ジャンルのゲーム一覧"
                     category = Category(
                         name=category_name,
                         description=category_description
@@ -50,7 +50,7 @@ def create_games():
                 publisher_name = row['Publisher']
                 if publisher_name not in publishers:
                     # Create new publisher if it doesn't exist
-                    publisher_description = f"{publisher_name} is a game publisher seeking funding for exciting new titles"
+                    publisher_description = f"{publisher_name} は、魅力的な新作タイトルの資金調達を目指すゲームパブリッシャーです"
                     publisher = Publisher(
                         name=publisher_name,
                         description=publisher_description
@@ -65,7 +65,7 @@ def create_games():
                 # Create the game with enhanced description for crowdfunding context
                 game = Game(
                     title=row['Title'],
-                    description=row['Description'] + " Support this game through our crowdfunding platform!",
+                    description=row['Description'] + " このゲームは当社のクラウドファンディングで支援できます！",
                     category_id=categories[category_name].id,
                     publisher_id=publishers[publisher_name].id,
                     star_rating=star_rating,

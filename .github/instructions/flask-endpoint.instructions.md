@@ -1,21 +1,21 @@
-# Endpoint creation guidelines
+# エンドポイント作成ガイドライン
 
-## Endpoint notes
+## エンドポイントに関する注意
 
-- Endpoints are created in Flask using blueprints
-- Create a centralized function for accessing data
-- All endpoints require tests
-    - Use the `unittest` module for testing
-    - All tests must pass
-    - [A script is provided to run tests](../../scripts/run-server-tests.sh)
+- エンドポイントは Flask の blueprint を用いて作成する
+- データアクセスは集約された関数を用意して行う
+- すべてのエンドポイントにはテストを必須とする
+    - テストには `unittest` モジュールを使用する
+    - すべてのテストがパスしていること
+    - [テスト実行用のスクリプトがあります](../../scripts/run-server-tests.sh)
 
-## Project notes
+## プロジェクトに関する注意
 
-- The Python virtual environment is located in the root of the project in a **venv** folder
-- Register all blueprints in [the app entrypoint](../../server/app.py)
-- Use the [test instructions](./python-tests.instructions.md) when creating tests
+- Python の仮想環境はプロジェクトルートの **venv** フォルダにある
+- すべての blueprint を[アプリのエントリポイント](../../server/app.py)で登録する
+- テストを作成する際は[テスト用指示ファイル](./python-tests.instructions.md)を参照する
 
-## Prototype files
+## 参考ファイル
 
-- [Endpoint prototype](../../server/routes/games.py)
-- [Tests prototype](../../server/tests/test_games.py)
+- [エンドポイントの参考実装](../../server/routes/games.py)
+- [テストの参考実装](../../server/tests/test_games.py)

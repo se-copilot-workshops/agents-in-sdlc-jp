@@ -1,29 +1,29 @@
 # Tailspin Toys
 
-This repository contains the project for a 1 hour guided workshop to explore GitHub Copilot Agent Mode and related features in Visual Studio Code. The project is a website for a fictional game crowd-funding company, with a [Flask](https://flask.palletsprojects.com/en/stable/) backend using [SQLAlchemy](https://www.sqlalchemy.org/) and [Astro](https://astro.build/) frontend using [Svelte](https://svelte.dev/) for dynamic pages.
+このリポジトリは、Visual Studio Code で GitHub Copilot の Agent Mode とそれに関連する機能を体験するための、約 1 時間のワークショップ用プロジェクトです。題材は、架空のゲーム向けクラウドファンディング企業の Web サイトで、バックエンドは [Flask](https://flask.palletsprojects.com/en/stable/)（[SQLAlchemy](https://www.sqlalchemy.org/) 利用）、フロントエンドは [Astro](https://astro.build/)（動的ページは [Svelte](https://svelte.dev/)）で構成されています。
 
-To begin the workshop, start at [docs/README.md](./docs/README.md)
+ワークショップを始めるには、[docs/README.md](./docs/README.md) を開いてください。
 
-Or, if just want to run the app...
+アプリを動かしたいだけの場合は以下に従ってください。
 
-## Launch the site
+## サイトの起動
 
-A script file has been created to launch the site. You can run it by:
+サイト起動用のスクリプトを用意しています。以下を実行してください：
 
 ```bash
 ./scripts/start-app.sh
 ```
 
-Then navigate to the [website](http://localhost:4321) to see the site!
+その後、[http://localhost:4321](http://localhost:4321) にアクセスするとサイトを確認できます！
 
-## License 
+## ライセンス
 
-This project is licensed under the terms of the MIT open source license. Please refer to the [LICENSE](./LICENSE) for the full terms.
+このプロジェクトは MIT ライセンスの下で公開されています。詳細は [LICENSE](./LICENSE) を参照してください。
 
-## Maintainers 
+## メンテナー
 
-You can find the list of maintainers in [CODEOWNERS](./.github/CODEOWNERS).
+メンテナーの一覧は [CODEOWNERS](./.github/CODEOWNERS) を参照してください。
 
-## Support
+## サポート
 
-This project is provided as-is, and may be updated over time. If you have questions, please open an issue.
+本プロジェクトは現状のまま提供され、今後更新される場合があります。質問がある場合は Issue を作成してください。

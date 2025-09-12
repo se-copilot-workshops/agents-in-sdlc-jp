@@ -1,101 +1,101 @@
-# Exercise 2 - Setting up the backlog with Copilot agent mode and GitHub's MCP Server
+# 演習 2 - Copilot のエージェントモードと GitHub の MCP サーバーでバックログを準備する
 
 
 
-There's more to writing code than just writing code. Issues need to be filed, external services need to be called, and information needs to be gathered. Typically this involves interacting with external tools, which can break a developer's flow. Through the power of Model Context Protocol (MCP), you can access all of this functionality right from Copilot!
+コードを書くことは「コードを書く」だけではありません。Issue を起票したり、外部サービスを呼び出したり、情報を収集したりする必要があります。通常、これは外部ツールとのやり取りを伴い、開発者のフローを断ち切ってしまうことがあります。Model Context Protocol（MCP）の力を使えば、これらの機能すべてに Copilot から直接アクセスできます！
 
-## Scenario
+## シナリオ
 
-You are a part-time developer for Tailspin Toys - a crowdfunding platform for board games with a developer theme. You've been assigned various tasks to introduce new functionality to the website. Being a good team member, you want to file issues to track your work. To help future you, you've decided to enlist the help of Copilot. You will set up your backlog of work for the rest of the lab, using GitHub Copilot Chat agent mode and the GitHub Model Context Protocol (MCP) server to create the issues for you. 
+あなたは Tailspin Toys（開発者をテーマにしたボードゲーム向けクラウドファンディング・プラットフォーム）のパートタイム開発者です。Web サイトに新機能を導入するためのさまざまなタスクが割り当てられています。良いチームメンバーとして、作業を追跡するために Issue を起票したいと考えています。将来の自分のために、Copilot の助けを借りることにしました。GitHub Copilot Chat のエージェントモードと GitHub Model Context Protocol（MCP）サーバーを使って、残りのラボで使う作業のバックログを作成します。
 
-To achieve this, you will:
+これを達成するために、次を行います：
 
-- use Model Context Protocol (MCP), which provides access to external tools and capabilities.
-- set up the GitHub MCP server in your repository.
-- use GitHub Copilot Chat agent mode to create issues in your repository.
+- 外部ツールや機能にアクセスできる Model Context Protocol（MCP）を使用する。
+- リポジトリに GitHub MCP サーバーを設定する。
+- GitHub Copilot Chat のエージェントモードを使用して、リポジトリに Issue を作成する。
 
-By the end of this exercise, you will have created a backlog of GitHub issues for use throughout the remainder of the lab.
+この演習が終わるころには、ラボの残りのステップで使用する GitHub Issue のバックログが作成できているはずです。
 
-## What is agent mode and Model Context Protocol (MCP)?
+## エージェントモードと Model Context Protocol（MCP）とは？
 
-Agent mode in GitHub Copilot Chat transforms Copilot into an AI agent that can perform actions on your behalf. This mode allows you to interact with Copilot in a more dynamic way, enabling it to use tools and execute tasks, like running tests or terminal commands, reading problems from the editor, and using those insights to update your code. This allows for a more interactive and collaborative workflow, enabling you to leverage the capabilities of AI in your development process.
+GitHub Copilot Chat のエージェントモードは、Copilot をあなたの代わりにアクションを実行できる AI エージェントへと変身させます。このモードでは、より動的に Copilot とやり取りでき、テストやターミナルコマンドの実行、エディタから問題点の読み取り、その洞察を使ったコード更新など、ツールを使用してタスクを実行できます。これにより、より双方向で共同的なワークフローが可能になり、開発プロセスで AI の能力を活用できるようになります。
 
-[Model Context Protocol (MCP)][mcp-blog-post] provides AI agents with a way to communicate with external tools and services. By using MCP, AI agents can communicate with external tools and services in real-time. This allows them to access up-to-date information (using resources) and perform actions on your behalf (using tools).
+[Model Context Protocol (MCP)][mcp-blog-post] は、AI エージェントが外部ツールやサービスと通信する方法を提供します。MCP を使用することで、AI エージェントは外部ツールやサービスとリアルタイムに通信できます。これにより、（リソースを使用して）最新の情報にアクセスし、（ツールを使用して）あなたの代わりにアクションを実行できるようになります。
 
-These tools and resources are accessed through an MCP server, which acts as a bridge between the AI agent and the external tools and services. The MCP server is responsible for managing the communication between the AI agent and the external tools (such as existing APIs or local tools like NPM packages). Each MCP server represents a different set of tools and resources that the AI agent can access.
+これらのツールやリソースは MCP サーバーを介してアクセスされます。MCP サーバーは AI エージェントと外部ツール・サービスの橋渡し役です。MCP サーバーは、AI エージェントと外部ツール（既存の API や NPM パッケージのようなローカルツールなど）との通信を管理します。各 MCP サーバーは、AI エージェントがアクセスできるツールとリソースの異なるセットを表します。
 
-![Diagram showing the inner works of agent mode and how it interacts with context, LLM and tools - including tools contributed by MCP servers and VS Code extensions](images/mcp-diagram.png)
+![エージェントモードの内部構造と、コンテキスト・LLM・ツール（MCP サーバーや VS Code 拡張が提供するツールを含む）との相互作用を示す図](images/mcp-diagram.png)
 
-Popular existing MCP servers include:
+よく使われている既存の MCP サーバーの例：
 
-- **[GitHub MCP Server][github-mcp-server]**: This server provides access to a set of APIs for managing your GitHub repositories. It allows the AI agent to perform actions such as creating new repositories, updating existing ones, and managing issues and pull requests.
-- **[Playwright MCP Server][playwright-mcp-server]**: This server provides browser automation capabilities using Playwright. It allows the AI agent to perform actions such as navigating to web pages, filling out forms, and clicking buttons.
-- **Additional reference servers**: There are many other MCP servers available that provide access to different tools and resources. Anthropic has [a list of MCP servers][anthropic-mcp-servers], including reference, third-party, and community implementations. 
+- **[GitHub MCP Server][github-mcp-server]**：GitHub リポジトリを管理するための API 群にアクセスを提供します。新しいリポジトリの作成、既存リポジトリの更新、Issue や Pull Request の管理などを AI エージェントが実行できます。
+- **[Playwright MCP Server][playwright-mcp-server]**：Playwright を用いたブラウザ自動化機能を提供します。Web ページのナビゲーション、フォーム入力、ボタンクリックなどの操作を AI エージェントが実行できます。
+- **追加の参照サーバー**：他にも多数の MCP サーバーがあり、さまざまなツールやリソースにアクセスできます。Anthropic は参照実装・サードパーティ・コミュニティ実装を含む [MCP サーバーの一覧][anthropic-mcp-servers] を公開しています。 
 
 > [!IMPORTANT]
-> With regard to security, treat MCP servers as you would any other dependency in your project. Before using an MCP server, carefully review its source code, verify the publisher, and consider the security implications. Only use MCP servers that you trust and be cautious about granting access to sensitive resources or operations.
+> セキュリティの観点では、MCP サーバーをプロジェクト内の他の依存関係と同様に扱ってください。使用前にソースコードを慎重に確認し、発行者を検証し、セキュリティへの影響を検討しましょう。信頼できる MCP サーバーのみを使用し、機密リソースや操作へのアクセス付与には注意してください。
 
-## Ensure your codespace is ready
+## Codespace の準備ができていることを確認する
 
-In a [prior exercise][prereqs-lesson] you launched the codespace you'll use for the remainder of the coding exercises in this lab. Let's put the final touches on it before we begin using it.
+[前の演習][prereqs-lesson] で、このラボの残りのコーディング演習で使用する Codespace を起動しました。ここでは本格的に使い始める前の最終調整を行います。
 
-The setup process for the codespace installed and setup many [VS Code extensions][vscode-extensions]. As with any software, updates may be needed. When your codespace is created we'll need to ensure everything is up-to-date.
+セットアップ手順では多数の [VS Code 拡張機能][vscode-extensions] がインストール・設定されました。あらゆるソフトウェアと同様に、更新が必要な場合があります。Codespace 作成後は、すべてが最新であることを確認しましょう。
 
-1. Return to the tab where you started your codespace. If you closed the tab, return to your repository, select **Code** > **Codespaces** and then the name of the codespace.
-2. Select **Extensions** on the workbench on the left side of your codespace.
+1. Codespace を開始したタブに戻ります。タブを閉じてしまった場合は、リポジトリに戻り、**Code** > **Codespaces** を選択して、対象の Codespace 名を選びます。
+2. Codespace 左側のワークベンチで **Extensions** を選択します。
 
-    ![Screenshot of the extensions window with multiple extensions showing either Update or Reload Window buttons](images/extensions-updates.png)
+    ![複数の拡張機能に Update または Reload Window ボタンが表示されている拡張機能ウィンドウのスクリーンショット](images/extensions-updates.png)
 
-3. Select **Update** on any extensions with an **Update** button. Repeat as necessary.
-4. Select **Reload Window** on any extensions with a **Reload Window** button to reload the codespace.
-5. When prompted by a dialog, select **Reload** to reload the window. This will ensure the latest version is being used.
+3. **Update** ボタンが表示されている拡張機能は **Update** を選択します。必要に応じて繰り返します。
+4. **Reload Window** ボタンが表示されている拡張機能は **Reload Window** を選択して Codespace を再読み込みします。
+5. ダイアログが表示されたら **Reload** を選択してウィンドウを再読み込みします。これにより最新バージョンが使用されます。
 
-## Using GitHub Copilot Chat and agent mode
+## GitHub Copilot Chat とエージェントモードの使用
 
-To access GitHub Copilot Chat agent mode, you need to have the GitHub Copilot Chat extension installed in your IDE, which should already be the case if you are using a GitHub Codespace.
+GitHub Copilot Chat のエージェントモードにアクセスするには、IDE に GitHub Copilot Chat 拡張機能がインストールされている必要があります。GitHub Codespace を使用している場合は、すでにインストール済みのはずです。
 
 > [!TIP]
-> If you do not have the GitHub Copilot Chat extension installed, you can [install it from the Visual Studio Code Marketplace][copilot-chat-extension]. Or open the Extensions view in Visual Studio Code, search for **GitHub Copilot Chat**, and select **Install**.
+> もし GitHub Copilot Chat 拡張機能がインストールされていない場合は、[Visual Studio Code Marketplace からインストール][copilot-chat-extension] できます。あるいは VS Code の拡張機能ビューを開き、**GitHub Copilot Chat** を検索して **Install** を選択してください。
 
-Once you have the extension installed, you may need to authenticate with your GitHub account to enable it.
+拡張機能をインストールしたら、有効化のために GitHub アカウントで認証が必要な場合があります。
 
-1. Return to your codespace.
-2. Select the **Copilot Chat** icon at the top of your codespace.
-3. Type a message like "Hello world" in the Copilot Chat window and press enter. This should activate Copilot Chat.
+1. Codespace に戻ります。
+2. Codespace の上部にある **Copilot Chat** アイコンを選択します。
+3. Copilot Chat ウィンドウで「Hello world」のようなメッセージを入力し、Enter を押します。これで Copilot Chat が起動するはずです。
 
-    ![Example of Copilot Chat activation](images/copilot-chat-activation.png)
+    ![Copilot Chat の起動例](images/copilot-chat-activation.png)
 
-4. Alternatively, if you are not authenticated you will be prompted to sign in to your GitHub account. Follow the instructions to authenticate.
+4. 認証されていない場合は、GitHub アカウントへのサインインを促すプロンプトが表示されます。指示に従って認証してください。
 
-    ![Example of Copilot Chat authentication prompt](images/copilot-authentication.png)
+    ![Copilot Chat の認証プロンプト例](images/copilot-authentication.png)
 
-5. After authentication, you should see the Copilot Chat window appear.
+5. 認証後、Copilot Chat ウィンドウが表示されます。
 
-    ![Example of Copilot Chat window](images/copilot-chat-window.png)
+    ![Copilot Chat ウィンドウの例](images/copilot-chat-window.png)
 
-6. If you're not already in Agent mode, you can switch to agent mode by selecting the dropdown in the Copilot Chat window and selecting **Agent**.
+6. まだエージェントモードになっていない場合は、Copilot Chat ウィンドウのドロップダウンから **Agent** を選択して切り替えます。
 
-    ![Example of switching to agent mode](images/copilot-agent-mode-dropdown.png)
+    ![エージェントモードへの切り替え例](images/copilot-agent-mode-dropdown.png)
 
-7. Set the model to **Claude 4.0 Sonnet**.
+7. モデルを **Claude Sonnet 4** に設定します。
 
-    ![Example of selecting the Claude 3.5 Sonnet model](images/copilot-agent-mode-model.png)
+    ![Claude Sonnet 4モデルの選択例](images/copilot-agent-mode-model.png)
 
 > [!IMPORTANT]
-> The authors of this lab are not indicating a preference towards one model or another. When building this lab, we used Claude 4.0 Sonnet, and as such are including that in the instructions. The hope is the code suggestions you receive will be relatively consistent to ensure a good experience. However, because LLMs are probabilistic, you may notice the suggestions received differ from what is indicated in the lab. This is perfectly normal and expected.
+> このラボの著者は特定のモデルを推奨する意図はありません。ラボの作成時には Claude Sonnet 4 を使用したため、手順にその記載があります。ねらいは、提案されるコードが比較的一貫して良い体験になるようにすることです。ただし LLM は確率的に動作するため、実際の提案が手順の記載と異なる場合があります。これは完全に正常で想定内です。
 
-8. The chat pane should update to indicate that you are now in agent mode. You should see a tools icon, showing that we can configure tools for GitHub Copilot to use.
+8. チャットペインが更新され、エージェントモードになったことが示されます。ツールアイコンが表示され、GitHub Copilot 用にツールを構成できることが確認できます。
 
-    ![Example of Copilot Chat agent mode with tools icon](images/copilot-agent-mode.png)
+    ![ツールアイコンがある Copilot Chat のエージェントモード例](images/copilot-agent-mode.png)
 
-Typically, the number of tools available will be set to 0 when setting up a new project, as we have not configured any MCP servers yet. But to help you get started, we have created a **.vscode/mcp.json** file with an example configuration for the [GitHub MCP server][github-mcp-server]. Let's go and explore that next.
+通常、新しいプロジェクトを設定した直後は、まだ MCP サーバーを構成していないため、使用可能なツール数は 0 になります。しかし、スムーズに始められるよう、[GitHub MCP サーバー][github-mcp-server] 用のサンプル設定を含む **.vscode/mcp.json** ファイルを用意しています。次はそれを確認しましょう。
 
-## Setting up the GitHub MCP server
+## GitHub MCP サーバーの設定
 
-The **.vscode/mcp.json** file is used to configure the MCP servers that are available in this Visual Studio Code workspace. The MCP servers provide access to external tools and resources that GitHub Copilot can use to perform actions on your behalf.
+**.vscode/mcp.json** は、この Visual Studio Code ワークスペースで利用できる MCP サーバーを構成するためのファイルです。MCP サーバーは、GitHub Copilot があなたの代わりにアクションを実行するために使用できる外部ツールやリソースへのアクセスを提供します。
 
-1. Open **.vscode/mcp.json** file in your repository.
-2. You should see a JSON structure similar to the following:
+1. リポジトリ内の **.vscode/mcp.json** を開きます。
+2. 次のような JSON 構造が表示されるはずです。
 
     ```json
     {
@@ -108,129 +108,129 @@ The **.vscode/mcp.json** file is used to configure the MCP servers that are avai
     }
     ```
 
-This configuration provides GitHub Copilot access to several additional tools so that it can interact with GitHub repositories, issues, pull requests, and more. This particular configuration uses the [remote GitHub MCP server][remote-github-mcp-server]. By using this approach, we don't need to worry about running the MCP server locally (and the associated management, like keeping it up to date), and we can authenticate to the remote server using OAuth 2.0 instead of a personal access token (PAT).
+この構成により、GitHub Copilot は GitHub のリポジトリ、Issue、Pull Request などと対話するための追加ツール群にアクセスできます。この構成は [リモートの GitHub MCP サーバー][remote-github-mcp-server] を使用しています。この方法を用いると、ローカルで MCP サーバーを実行する（および最新版維持などの管理を行う）必要がなくなり、個人用アクセストークン（PAT）ではなく OAuth 2.0 を使用してリモートサーバーに認証できます。
 
-The MCP server configuration is defined in the **servers** section of the **mcp.json** file. Each MCP server is defined by a unique name (in this case, github) and its type (in this case, **http**). When using local MCP servers, the type may be **stdio** and have a **command** and **args** field to specify how to start the MCP server. You can find out more about the configuration format in the [VS Code documentation][vscode-mcp-config]. In some configurations (not for the remote GitHub MCP server with OAuth), you may also see an **inputs** section. This defines any inputs (like sensitive tokens) that the MCP server may require. You can read more about the configuration properties in the [VS Code documentation][vscode-mcp-config]
+MCP サーバーの構成は **mcp.json** の **servers** セクションで定義します。各 MCP サーバーは一意の名前（この例では github）と、そのタイプ（この例では **http**）で定義されます。ローカル MCP サーバーを使用する場合、タイプは **stdio** となり、MCP サーバーの起動方法を指定する **command** と **args** フィールドを持つことがあります。構成形式の詳細は [VS Code のドキュメント][vscode-mcp-config] を参照してください。一部の構成（OAuth を使うリモート GitHub MCP サーバーでは不要）では **inputs** セクションが見られることがあります。これは MCP サーバーが必要とする入力（機密トークンなど）を定義するものです。構成プロパティについては [VS Code のドキュメント][vscode-mcp-config] で詳しく読むことができます。
 
-To utilize an MCP server it needs to be "started". This will allow GitHub Copilot to communicate with the server and perform the tasks you request.
+MCP サーバーを利用するには「起動」する必要があります。これにより、GitHub Copilot はサーバーと通信し、あなたが要求したタスクを実行できるようになります。
 
-1. Inside VS Code, open **.vscode/mcp.json**.
-2. To start the GitHub MCP server, select **Start** above the GitHub server.
+1. VS Code で **.vscode/mcp.json** を開きます。
+2. GitHub MCP サーバーを起動するには、GitHub サーバーの上に表示される **Start** を選択します。
 
-    ![The start button above the GitHub MCP server entry](images/ex2-start-mcp.png)
+    ![GitHub MCP サーバー項目の上にある Start ボタン](images/ex2-start-mcp.png)
 
-3. You should see a popup asking you to authenticate to GitHub.
+3. GitHub への認証を求めるポップアップが表示されるはずです。
 
-    ![A popup showing that the GitHub MCP server wants to authenticate to GitHub](images/ex2-mcp-auth-popup.png)
+    ![GitHub MCP サーバーが GitHub への認証を求めていることを示すポップアップ](images/ex2-mcp-auth-popup.png)
 
-4. Select **Continue** on the user account that you're using for this lab.
+4. このラボで使用するユーザーアカウントの **Continue** を選択します。
 
-    ![A popup showing the user account selection for GitHub authentication](images/ex2-mcp-select-account.png)
+    ![GitHub 認証のためのユーザーアカウント選択のポップアップ](images/ex2-mcp-select-account.png)
 
-5. If the page appears, select **Authorize visual-studio-code** to allow the GitHub MCP server to login as your selected user account. Once complete, the page should say "You can now close the window.".
+5. ページが表示されたら、**Authorize visual-studio-code** を選択して、選択したユーザーアカウントとして GitHub MCP サーバーのログインを許可します。完了すると、ページに「You can now close the window.」と表示されます。
 
-    ![A popup showing the authorization for visual-studio-code app](images/ex2-mcp-auth-vscode.png)
+    ![visual-studio-code アプリの認可を示すポップアップ](images/ex2-mcp-auth-vscode.png)
 
-6. After navigating back to the GitHub Codespace, you should see that the GitHub MCP server has started. You can check this in two places:
-    - The line in **.vscode/mcp.json** which previously said start. It should now present several options, and show a number of tools available. 
-    - Select the tools icon in the Copilot Chat pane to see the tools available. Scroll down the list that appears at the top of the screen, and you should see a list of tools from the GitHub MCP server.
+6. GitHub Codespace に戻ると、GitHub MCP サーバーが起動したことが確認できるはずです。次の 2 か所で確認できます：
+    - **.vscode/mcp.json** 内の、以前は Start と表示されていた行。複数のオプションが表示され、利用可能なツール数が示されているはずです。 
+    - Copilot Chat ペインのツールアイコンを選択して、利用できるツールを表示します。画面上部に表示されるリストをスクロールすると、GitHub MCP サーバー由来のツール一覧が見えるはずです。
 
-    ![Example of the MCP server started with tools available](images/ex2-mcp-server-started.png)
+    ![ツールが利用可能な状態で起動した MCP サーバーの例](images/ex2-mcp-server-started.png)
 
-That's it! You can now use Copilot Chat in agent mode to create issues, manage pull requests, and more.
+以上です！これで Copilot Chat のエージェントモードを使用して、Issue 作成や Pull Request の管理などが行えます。
 
 > [!IMPORTANT]
-> If you have any issues with this MCP server configuration, there are alternate configuration options in the  [GitHub MCP server][github-mcp-server] repository using local or remote MCP. If you opt for a configuration that requires authentication via a GitHub Personal Access Token (PAT), make sure that you do not share it with anyone. Treat it like a password and keep it secure. That means you should not check it into source control or share it with anyone else.
+> この MCP サーバー構成で問題が発生する場合は、[GitHub MCP サーバー][github-mcp-server] リポジトリに、ローカルまたはリモート MCP を用いる別の構成オプションが用意されています。GitHub の個人用アクセストークン（PAT）による認証が必要な構成を選ぶ場合は、トークンを誰とも共有しないようにしてください。パスワードと同様に厳重に管理する必要があります。つまり、ソース管理へコミットしたり、他者と共有したりしてはいけません。
 >
-> Because it is a sensitive password, **DO NOT** paste it into the **mcp.json** file. Instead use the **inputs** property to pass the token as an input variable. Published tokens is one of the leading causes of security breaches.
+> これは機密性の高いパスワードであるため、**mcp.json に直接貼り付けないでください**。代わりに **inputs** プロパティを使用して、トークンを入力変数として渡します。公開されたトークンはセキュリティ侵害の主因の 1 つです。
 
-## Creating a backlog of tasks
+## タスクのバックログを作成する
 
-Now that you have set up the GitHub MCP server, you can use Copilot Agent mode to create a backlog of tasks for use in the rest of the lab.
+GitHub MCP サーバーの設定ができたので、エージェントモードを使って、このラボで使用するタスクのバックログを作成しましょう。
 
-1. Return to the Copilot Chat pane. Select **Agent** from the dropdown list. Set the model to **Claude 4.0 Sonnet**.
+1. Copilot Chat ペインに戻ります。ドロップダウンから **Agent** を選択します。モデルは **Claude Sonnet 4** に設定します。
 
-    ![Example of the Copilot Chat pane with Agent Mode selected](images/copilot-agent-mode-dropdown.png)
+    ![Agent Mode が選択された Copilot Chat ペインの例](images/copilot-agent-mode-dropdown.png)
 
-2. Type or paste the following prompt to create the issues we'll be working on in the lab, replacing **<YOUR_REPOSITORY_PATH>** with the organization/name of your repository:
+2. 次のプロンプトを入力または貼り付け、**<YOUR_REPOSITORY_PATH>** をあなたのリポジトリの organization/name 形式のパスに置き換えます：
 
     ```markdown
-    In <YOUR_REPOSITORY_PATH>, create GitHub issues for our Tailspin Toys backlog in the repo. Each issue should include:
-    - A clear title
-    - A brief description of the task and why it is important to the project
-    - A checkbox list of acceptance criteria
+    <YOUR_REPOSITORY_PATH> にあるリポジトリの Tailspin Toys バックログ用に GitHub Issue を作成してください。各 Issue には次を含めてください：
+    - 明確なタイトル
+    - タスクの簡潔な説明と、それがプロジェクトにとって重要である理由
+    - 受け入れ条件（チェックボックスのリスト）
 
-    From our recent planning meeting, the upcoming backlog includes the following tasks:
+    最近の計画ミーティングで決まった直近のバックログは次のとおりです：
 
-    1. Allow users to filter games by category and publisher
-    2. Update our repository coding standards (including rules about Python formatting and docstrings) in a custom instructions file
-    3. Stretch Goal: Implement pagination on the game list page
+    1. ユーザーがカテゴリおよび出版社でゲームをフィルタできるようにする
+    2. リポジトリのコーディング標準（Python のフォーマットや docstring のルールを含む）をカスタム指示ファイルに更新する
+    3. ストレッチゴール：ゲーム一覧ページにページネーションを実装する
     ```
 
-3. Press <kbd>enter</kbd> or select the **Send** button to send the prompt to Copilot.
-4. GitHub Copilot should process the request and respond with a dialog box asking you to confirm the creation of the issues. 
+3. <kbd>enter</kbd> を押すか **Send** ボタンを選択して、プロンプトを Copilot に送信します。
+4. GitHub Copilot はリクエストを処理し、Issue 作成を実行する前に確認を求めるダイアログボックスを表示するはずです。 
 
-    ![Example of Copilot Chat dialog box asking for confirmation to run the create issue command](images/create-issue-dialog.png)
-
-> [!IMPORTANT]
-> Remember, AI can make mistakes, so make sure to review the issues before confirming.
-
-5. Select **see more** in **Run open new issue** box to see the details of the issue that will be created.
-6. Ensure the details in the **owner** and **repo**, **title** and **body** of the issue look correct. You can make any desired edits by double clicking the body and updating the content with the correct information.
-7. After reviewing the generated content, select **Continue** to create the issue.
-
-    ![Example of the expanded dialog box showing the GitHub Issue that will be created](images/create-issue-review.png)
-
-8. Repeat steps 4-6 for the remainder of the issues. Alternatively, if you are comfortable with Copilot automatically creating the issues you can select the down-arrow next to **Continue** and select **Allow in this session** to allow Copilot to create the issues for this session (the current chat).
-
-    ![Example of allowing Copilot to automatically create issues](images/create-issue-allow.png)
+    ![Issue 作成コマンドの実行確認を求める Copilot Chat のダイアログ例](images/create-issue-dialog.png)
 
 > [!IMPORTANT]
-> Ensure you are comfortable with Copilot automatically performing tasks on your behalf before you selecting **Allow in this session** or a similar option.
+> AI は誤りを犯す可能性があるため、確定前に内容を必ず見直してください。
 
-9. In a separate browser tab, navigate to your GitHub repository and select the issues tab.
-10. You should see a list of issues that have been created by Copilot. Each issue should include a clear title and a checkbox list of acceptance criteria.
+5. **Run open new issue** ボックスの **see more** を選択して、作成予定の Issue の詳細を表示します。
+6. **owner**、**repo**、**title**、**body** の内容が正しいか確認します。必要であれば、本文をダブルクリックして内容を編集できます。
+7. 生成内容を確認したら、**Continue** を選択して Issue を作成します。
 
-You should notice that the issues are fairly detailed. This is where we benefit from the power of Large Language Models (LLMs) and Model Context Protocol (MCP), as it has been able to create a clear initial issue description.
+    ![作成される GitHub Issue の詳細が表示されたダイアログの例](images/create-issue-review.png)
 
-![Example of issues created in GitHub](images/github-issues-created.png)
+8. 残りの Issue についても手順 4〜6 を繰り返します。あるいは、Copilot に自動作成を任せても問題ない場合は、**Continue** の横の下向き矢印を選択し、**Allow in this session** を選択して、このセッション（現在のチャット）に限り Copilot に Issue 作成を自動許可することもできます。
 
-## Summary and next steps
+    ![Copilot に自動作成を許可する例](images/create-issue-allow.png)
 
-Congratulations, you have created issues on GitHub using Copilot Chat and MCP!
+> [!IMPORTANT]
+> **Allow in this session** や同等のオプションを選択する前に、Copilot があなたの代わりにタスクを自動実行することに十分に納得しているか確認してください。
 
-To recap, in this exercise we:
+9. 別のブラウザタブで GitHub のリポジトリを開き、Issues タブを選択します。
+10. Copilot によって作成された Issue の一覧が表示されるはずです。各 Issue には、明確なタイトルと受け入れ条件のチェックボックスリストが含まれているはずです。
 
-- used Model Context Protocol (MCP), which provides access to external tools and capabilities.
-- set up the GitHub MCP server in your repository.
-- used GitHub Copilot Chat agent mode to create issues in your repository.
+Issue はかなり詳細になっていることに気づくでしょう。これは、大規模言語モデル（LLM）と Model Context Protocol（MCP）の力により、明確な初期の Issue 説明が自動で作成できるためです。
 
-With the GitHub MCP server configured, you can now use GitHub Copilot Chat Agent Mode to perform additional actions on your behalf, like creating new repositories, managing pull requests, and searching for information across your repositories.
+![GitHub に作成された Issue の例](images/github-issues-created.png)
 
-You can now continue to the next exercise, where you will learn how to [provide Copilot guidance with custom instructions][next-lesson] to ensure code is generated following your organization's defined patterns and practices.
+## まとめと次のステップ
 
-### Optional exploration exercise – Set up the Microsoft Playwright MCP server
+おめでとうございます。Copilot Chat と MCP を使って GitHub に Issue を作成できました！
 
-If you are feeling adventurous, you can try installing and configuring another MCP server, such as the [Microsoft Playwright MCP server][playwright-mcp-server]. This will allow you to use GitHub Copilot Chat Agent Mode to perform browser automation tasks, such as navigating to web pages, filling out forms, and clicking buttons.
+この演習の要点：
 
-You can find the instructions for installing and configuring the Playwright MCP server in the [Playwright MCP repository][playwright-mcp-server].
+- 外部ツールや機能にアクセスできる Model Context Protocol（MCP）を使用した。
+- リポジトリに GitHub MCP サーバーを設定した。
+- GitHub Copilot Chat のエージェントモードを使って、リポジトリに Issue を作成した。
 
-Notice that the setup process is similar to the GitHub MCP server, but you do not need to provide any credentials like the GitHub Personal Access Token. This is because the Playwright MCP server does not require authentication to access its capabilities.
+GitHub MCP サーバーが構成できたので、今後は新しいリポジトリの作成、Pull Request の管理、リポジトリ横断の情報検索など、GitHub Copilot Chat のエージェントモードでさらに多くのアクションを実行できます。
 
-## Resources
+次の演習では、組織で定義されたパターンやプラクティスに沿ってコードが生成されるようにするため、[カスタム指示によって Copilot にガイダンスを与える方法][next-lesson] を学びます。
+
+### オプションの探究演習 – Microsoft Playwright MCP サーバーを設定する
+
+さらに踏み込みたい場合は、[Microsoft Playwright MCP サーバー][playwright-mcp-server] など別の MCP サーバーをインストール・構成してみてください。これにより、GitHub Copilot Chat のエージェントモードで、Web ページのナビゲーション、フォーム入力、ボタンクリックなどのブラウザ自動化タスクを実行できるようになります。
+
+Playwright MCP サーバーのインストールと構成手順は、[Playwright MCP リポジトリ][playwright-mcp-server] に記載されています。
+
+セットアップ手順は GitHub MCP サーバーと似ていますが、GitHub の個人用アクセストークンのような認証情報を提供する必要はありません。これは、Playwright MCP サーバーがその機能にアクセスするための認証を必要としないためです。
+
+## リソース
 
 - [What the heck is MCP and why is everyone talking about it?][mcp-blog-post]
 - [GitHub MCP Server][github-mcp-server]
 - [Microsoft Playwright MCP Server][playwright-mcp-server]
 - [Anthropic MCP Servers][anthropic-mcp-servers]
-- [VS Code Extensions][vscode-extensions]
-- [GitHub Copilot Chat Extension][copilot-chat-extension]
-- [Creating a fine-grained personal access token][github-pat-docs]
+- [VS Code 拡張機能][vscode-extensions]
+- [GitHub Copilot Chat 拡張機能][copilot-chat-extension]
+- [細分化された個人用アクセストークンの作成][github-pat-docs]
 
 ---
 
- Click the following link to move onto the next exercise.
- [Next exercise: Providing context to Copilot with instruction files](./3-custom-instructions.md)
+ 次の演習に進むには以下のリンクをクリックしてください。
+ [次の演習：インストラクションファイルで Copilot にコンテキストを提供する](./3-custom-instructions.md)
 
 [previous-lesson]: ./1-copilot-coding-agent.md
 [next-lesson]: ./3-custom-instructions.md

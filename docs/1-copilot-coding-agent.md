@@ -1,52 +1,52 @@
-# Exercise 1 - GitHub Copilot coding agent
+# 演習 1 - GitHub Copilot coding agent
 
 
-There are likely very few, if any, organizations who don't struggle with tech debt. This could be unresolved security issues, legacy code requiring updates, or feature requests which have languished on the backlog because we just didn't have the time to implement them. GitHub Copilot's coding agent is built to perform tasks such as updating code and adding functionality, all in an autonomous fashion. Once the agent completes its work, it generates a draft PR ready for a human developer to review. This allows offloading of tedious tasks and an acceleration of the development process, and frees developers to focus on larger picture items.
+技術的負債に悩まされない組織はほとんどありません。未解決のセキュリティ課題、更新が必要なレガシーコード、実装の時間が取れずバックログに積まれたままの機能要望などが典型です。GitHub Copilot の coding agent は、コード更新や機能追加といったタスクを自律的に実行するための機能です。エージェントの作業が完了すると、人間の開発者がレビューできるドラフト PR を作成します。これにより、単調な作業をオフロードして開発を加速し、開発者はより本質的な作業に集中できます。
 
-You'll explore the following with Copilot coding agent:
+本演習では、Copilot coding agent を用いて次の点を学びます。
 
-- customizing the environment for generating code.
-- ensuring operations are performed securely.
-- the importance of clearly scoped issues.
-- assigning issues to Copilot.
+- コード生成のための環境をカスタマイズする
+- 安全性を担保しながら操作を実行する
+- スコープが明確な Issue の重要性を理解する
+- Issue を Copilot に割り当てる
 
-## Scenarios
+## シナリオ
 
-Tailspin Toys already has some tech debt they'd like to address. The contractors initially hired to create the first version of the site left the documentation in an unideal state - and by that we mean it's completely lacking. As a first step, they'd like to see docstrings or the equivalent added to all functions in the application.
+Tailspin Toys には、すでに対処したい技術的負債があります。サイトの初期版を作成した外部委託の開発者が、ドキュメントをほぼ残していません。まずはアプリケーション内のすべての関数に docstring（または同等のドキュメント）が付与されている状態にしたいと考えています。
 
-Additionally, the design team is ready to get to work on building the UX for managing games. They don't need a full implementation yet, but they at least need some endpoints they can use for testing. Specifically, they need endpoints for the games API which will allow them to create, update and delete games. This is currently a blocker, but we have other issues which are of higher priority at the moment.
+加えて、デザインチームはゲーム管理の UX 構築に着手できる状態にしたいと考えています。完全な実装はまだ不要ですが、受け入れテストに使えるエンドポイントは必要です。具体的には、ゲーム API に「作成・更新・削除」を行うためのエンドポイントが必要です。これは現状のボトルネックですが、他にも優先度の高い Issue がある状況です。
 
-These are both examples of tasks which can quickly find themselves deprioritized, and are great to assign to Copilot coding agent. Copilot coding agent can then work on them asynchronously, allowing the developer to focus on other tasks, then return to review Copilot's work and ensure everything is as expected.
+これらはどちらも優先度が下がりがちなタスクの好例であり、Copilot coding agent に割り当てるのに最適です。Copilot に任せて非同期で進めることで、開発者は他の作業に集中し、後から Copilot の成果をレビューして期待どおりか確認できます。
 
-## Introducing GitHub Copilot coding agent
+## GitHub Copilot coding agent の概要
 
-[GitHub Copilot coding agent][coding-agent-overview] can perform tasks in the background, much in the same way a human developer would. And, just like with working with a human developer, this is done by [assigning a GitHub issue to Copilot][assign-issue]. Once assigned, Copilot will create a draft pull request to track its progress, setup an environment, and begin working on the task. You can dig into Copilot's session while it's still in flight or after its completed. Once its ready for you to review the proposed solution, it'll tag you in the pull request!
+[GitHub Copilot coding agent][coding-agent-overview] は、人間の開発者と同様にバックグラウンドでタスクを実行できます。人間の開発者と働くときと同じように、[GitHub の Issue を Copilot に割り当てる][assign-issue]ことで開始します。割り当てられると、Copilot は進捗を追跡するためのドラフト PR を作成し、環境をセットアップしてタスクの実行を開始します。作業中や完了後にセッションの内容を確認でき、提案がレビュー可能になれば、PR 上であなたにメンションが届きます。
 
-## The importance of well-scoped instructions
+## スコープが明確な指示の重要性
 
-While it can often feel like it, there is no magic in GitHub Copilot. There are no magic solutions available, where you can with just a couple of sentences snap your fingers and let AI perform the entire task for you. In fact, even seemingly straight-forward operations can often have fair amount of complexity when we peel back the layers.
+つい魔法のように感じてしまいますが、GitHub Copilot は魔法ではありません。短い一文二文の指示で、AI がすべてのタスクを完璧にこなすわけではありません。実際には、単純に見える作業であっても、詳細に踏み込むと多くの複雑さがあります。
 
-As a result, we want to [be mindful about how we approach assigning tasks to Copilot coding agent][coding-agent-best-practices], and that working with Copilot as an AI pair programmer is typically the best approach. The approach you take tasks big and small is the same with or without Copilot - work in stages, learn, experiment, and adapt accordingly. As always, the fundamentals of software development do not change with the addition of generative AI.
+そのため、[Copilot coding agent へのタスクの割り当て方には配慮が必要です][coding-agent-best-practices]。通常は AI ペアプログラミングとして Copilot と協調するのが最良です。タスクが大きくても小さくても基本は同じで、段階的に進め、学び、試行錯誤しながら調整します。生成 AI を導入しても、ソフトウェア開発の基本原則は変わりません。
 
-## Setting up the dev environment for the Copilot coding agent
+## Copilot coding agent 用の開発環境セットアップ
 
-Creating code, regardless of who's involved, typically requires a specific environment and some setup scripts to be run to ensure everything is in a good state. This holds true when assigning tasks to Copilot, which is performing tasks in a similar fashion to a SWE.
+コード作成には、誰が書く場合でも、適切な環境と準備のためのスクリプトが必要です。これは Copilot にタスクを割り当てる場合でも同じで、Copilot もソフトウェアエンジニアと同様の手順で作業します。
 
-[Copilot coding agent supports a special workflow][setup-workflow], set in the **.github/workflows/copilot-setup-steps.yml** file, to run before it gets to work. This enables it to have access to the required development tools and dependencies. We pre-configured this ahead of the lab to help the lab flow and allow this learning opportunity. It makes sure that Copilot had access to Python, Node.JS, and the required dependencies for the client and server:
+[Copilot coding agent には事前に実行される専用ワークフロー][setup-workflow]（**.github/workflows/copilot-setup-steps.yml**）を設定できます。これにより、必要な開発ツールや依存関係へアクセスできるようにします。本ラボでは事前に設定済みで、Copilot が Python、Node.js、クライアントとサーバーの依存関係にアクセスできるようにしています。
 
 ```yaml
 name: "Copilot Setup Steps"
 
-# Allows you to test the setup steps from your repository's "Actions" tab
+# リポジトリの Actions タブからセットアップ手順を試すためのトリガー
 on: workflow_dispatch
 
 jobs:
   copilot-setup-steps:
     runs-on: ubuntu-latest
-    # Set the permissions to the lowest permissions possible needed for *your steps*. Copilot will be given its own token for its operations.
+    # 必要最低限の権限を設定します。Copilot の操作には Copilot 専用のトークンが付与されます。
     permissions:
-      # If you want to clone the repository as part of your setup steps, for example to install dependencies, you'll need the `contents: read` permission.
-      # If you don't clone the repository in your setup steps, Copilot will do this for you automatically after the steps complete.
+      # 依存関係のインストールなどでセットアップ中にリポジトリをクローンする場合は `contents: read` が必要です。
+      # セットアップでクローンしない場合は、この手順の後で Copilot が自動的に行います。
       contents: read
     steps:
       - name: Checkout code
@@ -75,125 +75,121 @@ jobs:
         run: npm ci
 ```
 
-It looks like any other GitHub workflow file, but it has a few key points:
+他の GitHub ワークフローファイルと同じように見えますが、いくつか重要な点があります：
 
-- It contains a single job called **copilot-setup-steps**. This job is executed in GitHub Actions before Copilot starts working on the pull request.
-- We've also added a **workflow_dispatch** trigger, which allows you to run the workflow manually from the Actions tab of your repository. This is useful for testing that the workflow runs successfully instead of waiting for Copilot to run it.
+- 単一のジョブ **copilot-setup-steps**が含まれています。このジョブは、Copilot がプルリクエストで作業を開始する前に GitHub Actions 上で実行されます。
+- また、 **workflow_dispatch** トリガーを追加しており、これによりリポジトリの Actions タブからワークフローを手動で実行できるようになります。これは、 Copilot が実行するのを待つ代わりにワークフローが正常に動作するかをテストするのに便利です。
 
-## Improving code documentation
+## コードドキュメントの改善
 
-While every developer and organization understands the importance of documentation, most projects have either outdated information or lack it altogether. This is the type of tech debt which often goes unaddressed, slowing productivity and making it more difficult to maintain the codebase or bring new developers into the team. Fortunately, Copilot shines at creating documentation, and this is a perfect issue to assign to Copilot coding agent. It'll work in the background to generate the necessary documentation. In a future exercise we'll return to review its work.
+すべての開発者と組織がドキュメントの重要性を理解している一方で、ほとんどのプロジェクトでは情報が古くなっているか、そもそも不足していることが多いです。これはしばしば放置される技術的負債の一種であり、生産性を低下させ、コードベースの保守や新しい開発者のチーム参加を難しくします。幸いなことに、Copilot はドキュメント作成に長けており、これは Copilot coding agent に割り当てるのに最適な課題です。エージェントはバックグラウンドで必要なドキュメントを生成します。今後の演習でその生成物をレビューします。
 
-1. Navigate to your repository on github.com in a **new browser tab**. (TIP:  se-copilot-workshops/_yourhandle_)
-2. Select the **Issues** tab.
-3. Select **New issue** to open the new issue dialog.
-4. If prompted, select **Blank issue** to create the new issue.
-5. Set the **Title** to `Code lacks documentation`.
-6. Set the **Description** to:
-   
+1. **新しいブラウザタブ**を開き、github.com 上の自分のリポジトリに戻ります（ヒント： se-copilot-workshops/___yourhandle_)。
+2. **Issues** タブを開きます。
+3. **New issue** を選んで新規 Issue ダイアログを開きます。
+4. テンプレート選択が表示されたら **Blank issue** を選びます。
+5. **Title** を `コードのドキュメンテーションが不足している` に設定します。
+6. **Description** を次の内容に設定します。
+
     ```plaintext
-    Our organisation has a requirement that all functions have docstrings or the language equivalent. Unfortunately, recent updates haven't followed this standard. We need to update the existing code to ensure docstrings (or the equivalent) are included with every function or method.
+    私たちの組織では、すべての関数に docstring （または同等のもの）を付けることを義務付けています。しかし、最近の更新ではこの基準が守られていません。既存のコードを更新して、すべての関数やメソッドに docstring （または同等のもの）が含まれるようにする必要があります。
     ```
+7. **Create** を選択して Issue を作成します。Create ボタンを確認するために下にスクロールする必要がある場合があります。
+8. 画面右側の **Assignee** を選択し、このリポジトリの関係者の検索ボックスを開きます。
+9. **Copilot** を選択し、Issue の担当者に設定します。
 
-7. Select **Create** to create the issue. You might need to scroll down to see the Create button.
-8. On the right side, select **Assignees** to open the searchbox for contributors to the repository.
-9. Select **Copilot** to assign the issue to Copilot.
+  ![Copilotを Issue に割り当てる](images/ex4-issue-assign.png)
 
-  ![Assigning Copilot to an issue](images/ex4-issue-assign.png)
+10. ページ内の他の箇所をクリックして担当者ウィンドウを閉じます。しばらくすると、Issue の最初のコメントに 👀 が表示され、Copilot が作業中であることが示されます！
 
-10. Click somewhere else on the page to close the assignment window. Shortly after, you should see a set of 👀 on the first comment in the issue, indicating Copilot is on the job!
+  ![Copilot が作業中であることを示すために目の絵文字が表示される](images/ex4-issue-eyes.png)
 
-  ![Copilot uses the eyes emoji to indicate it's working on the issue](images/ex4-issue-eyes.png)
+11. **Pull Requests** タブを開きます。
+12. 新しく作成された Pull Request を開きます。そのタイトルは **[WIP]: コードのドキュメンテーションが不足している** のようになっているはずです。
+13. **数分待つと**、Copilot が進捗を示すチェックリストを PR に追加します。
+14. そのタスクリストを確認します。Copilot はこのリストを使って進捗を共有します。
+15. タイムラインを下にスクロールすると、Copilot が作業を開始した更新が表示されます。
+16. **View session** ボタンを選択します。
 
-11. Select the **Pull Requests** tab.
-12. Open the newly generated issue, which will be titled something similar to **[WIP]: Code lacks documentation**.
-13. **After a few minutes**, you should see that Copilot has created a todo list.
-14. Review the list and the tasks it's going to complete.
-15.  Scroll down the pull request timeline, and you should see an update that Copilot has started working on the issue.
-16.  Select the **View session** button.
-
-  ![Copilot session view](images/ex4-view-session.png)
-
+　　![Copilot セッションビュー](images/ex4-view-session.png)
 
 > [!IMPORTANT]
-> You may need to refresh the window to see the updated indicator.
+> 画面を更新しないと表示が変わらない場合があります。
 
-17. Notice that you can scroll through the live session, and how Copilot is solving the problem. That includes exploring the code and understanding the state, how Copilot pauses to think and decide on the appropriate plan and also creating code.
+17. ライブセッションをスクロールして、Copilot がどのように問題を解決しているかを確認してください。コードの調査や状態の理解、適切な計画を立てるために一時停止して考える様子、そして実際にコードを作成する様子が含まれます。
 
-**This will likely take several minutes.** One of the primary goals of Copilot coding agent is to allow it to perform tasks asynchronously, freeing us to focus on other tasks. We're going to take advantage of that very feature by both assigning another task to Copilot coding agent, then turning our attention to writing some code to add features to our application.
+**これは数分かかる可能性があります。** Copilot コーディングエージェントの主な利点の一つは、非同期でタスクを実行できることにより、私たちが他の作業に集中できるようにする点です。この機能を活用して、別のタスクを Copilot コーディングエージェントに割り当て、その間にアプリケーションに機能を追加するコードを書いていきます。
 
-## Create new endpoints to modify games
+## 新しいエンドポイントを作成してゲームを変更できるようにする
 
-As has been highlighted, one of the great advantages of GitHub Copilot coding agent is the ability to divide work, where you can focus on one set of tasks while it focuses on another. While creating the endpoints for modifying games for the design team might not necessarily take a long time, it's still time which could be used for other tasks. Let's assign it to Copilot coding agent!
+前述したように、GitHub Copilot コーディングエージェントの大きな利点の一つは作業を分担できることです。あなたは一連のタスクに集中し、エージェントは別のタスクに集中できます。デザインチーム向けにゲームを変更するためのエンドポイントを作成する作業は長時間かからないかもしれませんが、それでも他の作業に使える時間です。そこで、この作業を Copilot コーディングエージェントに任せましょう！
 
-1. Return to your repository on github.com.
-2. Select the **Issues** tab.
-3. Select **New issue** to open the new issue dialogue.
-4. If prompted, select **Blank issue** to use the blank template.
-5. Set the **Title** to: `Add endpoints to create and edit games`
-6. Set the **Description** to:
+1. github.comの自分のリポジトリに戻ります。
+2. **Issues** タブを開きます。
+3. **New issue** を選んで新規 Issue ダイアログを開きます。
+4. テンプレート選択が表示されたら **Blank issue** を選びます。
+5. **Title** を `ゲームを作成・編集するエンドポイントを追加する` に設定します。
+6. **Description** を次の内容に設定します：
 
-    ```markdown
-    We're going to be creating functionality in the future to allow for the submission (and editing) of games. For now we just want the endpoints so we can explore how we want to create the UX and do some acceptance testing. Our requirements are:
-
-   - Add new endpoints to the Games API to support creating, updating and deleting games
-   - There should be appropriate error handling for all new endpoints
-   - There should be unit tests created for all new endpoints
-   - Before creating the PR, ensure all tests pass
+  ```markdown
+   - Games API に、ゲームの作成・更新・削除を行う新しいエンドポイントを追加する
+   - すべての新規エンドポイントに適切なエラーハンドリングを実装する
+   - すべての新規エンドポイントに対しユニットテストを作成する
+   - PR を作成する前に、すべてのテストがパスしていることを確認する
    ```
 
-7. Note the level of guidance being provided to Copilot to help set everyone up for success.
-8. Locate the **Assignee** button towards the right side of the issue.
-9. Select **Assignee** to open the dialog box to select assignees.
-10. Select **Copilot** from the list.
+7. Copilot がうまく作業を行うことができるような十分な指示を与えている点に注目してください。
+8. Issue 右側の **Assignee** ボタンを見つけます。
+9. **Assignee** をクリックして担当者選択のダイアログを開きます。
+10. **Copilot** を選択します。
 
-    ![Create issue and assign Copilot coding agent](images/create-issue-assign-copilot.png)
+   ![Issue を作成し Copilot coding agent をアサイン](images/create-issue-assign-copilot.png)
 
-11. Select **Create** to save the issue. You might need to scroll down to see the Create button.
-12. The newly created issue should now open.
+11. **Create** を選択して Issue を作成します（下部にスクロールが必要な場合があります）。
+12. 作成した Issue が表示されます。
 
-Shortly after, you should see a set of 👀 on the first comment in the issue, indicating Copilot is on the job!
+まもなく、最初のコメントに 👀 が表示され、Copilot が作業を開始したことが分かります！
 
-![Copilot uses the eyes emoji to indicate it's working on the issue](images/ex4-issue-eyes.png)
+![Copilot が作業中であることを示す絵文字（目）](images/ex4-issue-eyes.png)
 
 > [!IMPORTANT]
-> You may need to refresh the window to see the updated indicator.
+> 画面を更新しないと表示が変わらない場合があります。
 
-13. Select the **Pull Requests** tab.
-14. Open the newly generated PR, which will be titled something similar to **[WIP]: Add endpoints to create and edit games**.
-15. After a few minutes, Copilot will update the PR with a checklist of the tasks its going to perform. It will use this checklist to indicate to the outside world its progress.
-16. Scroll down the pull request timeline, and you should see an update that Copilot has started working on the issue.
-17. Select the **View session** button.
+13. **Pull Requests** タブを開きます。
+14. 生成された PR（例: **[WIP]: ゲームを作成・編集するエンドポイントを追加する**）を開きます。
+15. 数分後、Copilot が作業内容のチェックリストを PR に追記します。Copilot はこのチェックリストで進捗を共有します。
+16. タイムラインを下にスクロールすると、Copilot が作業を開始した更新が表示されます。
+17. **View session** ボタンを選択します。
 
-    ![Copilot session view](images/ex4-view-session.png)
+    ![Copilot セッションビュー](images/ex4-view-session.png)
 
-18. Notice that you can scroll through the live session, and how Copilot is solving the problem. That includes exploring the code and understanding the state, how Copilot pauses to think and decide on the appropriate plan and also creating code.
+18. ライブセッションをスクロールし、Copilot がどのように問題を解決しているかを確認できます。コードの探索や状態の把握、思考のステップ、計画の策定、コード作成の様子が見られます。
 
-Copilot is now diligently working on your request! Copilot coding agent works in a similar fashion to a SWE, so we don't need to actively monitor it, but instead review once it's completed. Let's turn our attention to writing code and adding other features.
+Copilot は現在、あなたのリクエストに対して着実に作業中です。Copilot coding agent はソフトウェアエンジニアと同様に動作するため、常時監視は不要で、完了後にレビューすれば十分です。ここからはコード作成と他の機能に目を向けましょう。
 
-## Summary and next steps
+## まとめと次のステップ
 
-This lesson explored [GitHub Copilot coding agent][copilot-agents], your AI peer programmer. With coding agent you can assign issues to Copilot to perform asynchronously. You can use Copilot to address tech debt, create new features, or aid in migrating code from one framework to another.
+本レッスンでは、AI の同僚である [GitHub Copilot coding agent][copilot-agents] を紹介しました。Issue を Copilot に割り当てて非同期に作業させ、技術的負債の解消・新機能の作成・フレームワーク移行の補助などに活用できます。
 
-You explored the these concepts:
+以下のトピックを学びました：
 
-- customizing the environment for generating code.
-- ensuring operations are performed securely.
-- the importance of clearly scoped issues.
-- assigning issues to Copilot.
+- コード生成環境のカスタマイズ
+- 安全に作業が行われていることの確認
+- スコープが明確な Issue の重要性
+- Issue の Copilot への割り当て
 
-With coding agent working diligently in the background, we can now turn our attention to our next lesson, [using MCP servers to interact with external services][next-lesson]. [Copilot coding agent can also use MCP servers][coding-agent-mcp], but we're going to switch back to our Codespace and try use MCP with Copilot agent mode.
+バックグラウンドで coding agent が動いている間に、[外部サービスと連携する MCP サーバーの活用][next-lesson] に進みましょう。[Copilot coding agent は MCP サーバーも利用できます][coding-agent-mcp] が、次は Codespace に戻り、Copilot Agent Mode と MCP を組み合わせて試してみます。
 
-## Resources
+## リソース
 
-- [About Copilot coding agent][copilot-agents]
-- [Assigning GitHub issues to Copilot][assign-issue]
-- [Copilot coding agent setup workflow best practices][coding-agent-best-practices]
+- [Copilot coding agent の概要][copilot-agents]
+- [GitHub の Issue を Copilot に割り当てる][assign-issue]
+- [Copilot coding agent 用セットアップワークフローのベストプラクティス][coding-agent-best-practices]
 
 ---
 
- Click the following link to move onto the next exercise.
- [Next exercise: Setting up the backlog with Copilot agent mode and GitHub's MCP Server](./2-mcp.md)
+ 次の演習に進むには以下をクリックしてください。
+ [次の演習: Copilot Agent Mode と GitHub MCP Server でバックログを整える](./2-mcp.md)
 
 [coding-agent-overview]: https://docs.github.com/en/copilot/using-github-copilot/coding-agent/about-assigning-tasks-to-copilot#overview-of-copilot-coding-agent
 [coding-agent-mcp]: https://docs.github.com/en/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp

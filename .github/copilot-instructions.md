@@ -1,70 +1,70 @@
-# Tailspin Toys Crowd Funding Development Guidelines
+# Tailspin Toys クラウドファンディング開発ガイドライン
 
-This is a crowdfunding platform for games with a developer theme. The application uses a Flask backend API with SQLAlchemy ORM for database interactions, and an Astro/Svelte frontend with Tailwind CSS for styling. Please follow these guidelines when contributing:
+これは開発者テーマのゲーム向けクラウドファンディングプラットフォームです。バックエンドは Flask の API（DB 連携は SQLAlchemy ORM）、フロントエンドは Astro/Svelte（スタイルは Tailwind CSS）を使用します。次のガイドラインに従ってください。
 
-## Code standards
+## コーディング標準
 
-### Required Before Each Commit
+### コミット前に必ず行うこと
 
-- Run Python tests to ensure backend functionality
-- For frontend changes, run builds in the client directory to verify build success and the end-to-end tests, to ensure everything works correctly
-- When making API changes, update and run the corresponding tests to ensure everything works correctly
-- When updating models, ensure database migrations are included if needed
-- When adding new functionality, make sure you update the README
-- Make sure all guidance in the Copilot Instructions file is updated with any relevant changes, including to project structure and scripts, and programming guidance
+- Python テストを実行してバックエンドの動作を確認する
+- フロントエンド変更時は client ディレクトリでビルドが通ること、必要に応じて E2E テストを実行して全体の動作を確認する
+- API を変更した場合は、対応するテストを更新して実行し、正しく動作することを確認する
+- モデルを更新した場合、必要に応じて DB マイグレーションを含める
+- 新機能を追加した場合は README を更新する
+- Copilot Instructionsファイルの内容も、プロジェクト構成・スクリプト・実装方針の変更に合わせて更新する
 
-### Code formatting requirements
+### フォーマット要件
 
-- When writing Python, you must use type hints for return values and function parameters.
+- Python では、関数の引数と戻り値に必ず型ヒントを付けること
 
-### Python and Flask Patterns
+### Python / Flask のパターン
 
-- Use SQLAlchemy models for database interactions
-- Use Flask blueprints for organizing routes
-- Follow RESTful API design principles
+- DB 連携は SQLAlchemy のモデルを使用する
+- ルーティングは Flask の blueprint で構成する
+- RESTful な API 設計原則に従う
 
-### Svelte and Astro Patterns
+### Svelte / Astro のパターン
 
-- Use Svelte for interactive components
-- Follow Svelte's reactive programming model
-- Create reusable components when functionality is used in multiple places
-- Use Astro for page routing and static content
+- インタラクティブな要素は Svelte を使用する
+- Svelte のリアクティブモデルに従う
+- 複数箇所で使う機能は再利用可能なコンポーネントとして切り出す
+- ページルーティングや静的コンテンツは Astro を使用する
 
-### Styling
+### スタイル
 
-- Use Tailwind CSS classes for styling
-- Maintain dark mode theme throughout the application
-- Use rounded corners for UI elements
-- Follow modern UI/UX principles with clean, accessible interfaces
+- スタイルには Tailwind CSS のクラスを使用する
+- アプリ全体を通してダークモードを維持する
+- UI 要素は角丸を用いる
+- アクセシブルでモダンな UI/UX 原則に従う
 
-### GitHub Actions workflows
+### GitHub Actions ワークフロー
 
-- Follow good security practices
-- Make sure to explicitly set the workflow permissions
-- Add comments to document what tasks are being performed
+- セキュアな実装に留意する
+- `permissions` を明示的に設定する
+- 実行しているタスクの目的をコメントで説明する
 
-## Scripts
+## スクリプト
 
-- Several scripts exist in the `scripts` folder
-- Use existing scripts to perform tasks rather than performing them manually
-- Existing scripts:
-    - `scripts/setup-env.sh`: Performs installation of all Python and Node dependencies
-    - `scripts/run-server-tests.sh`: Calls setup-env, then runs all Python tests
-    - `scripts/start-app.sh`: Calls setup-env, then starts both backend and frontend servers
+- `scripts` フォルダに各種スクリプトが存在する
+- 手作業ではなく、可能な限り既存スクリプトを利用する
+- 代表的なスクリプト:
+    - `scripts/setup-env.sh`: Python / Node の依存関係を一括インストール
+    - `scripts/run-server-tests.sh`: `setup-env` 実行後に Python テストをすべて実行
+    - `scripts/start-app.sh`: `setup-env` 実行後にバックエンド/フロントエンドのサーバーを起動
 
-## Repository Structure
+## リポジトリ構成
 
-- `server/`: Flask backend code
-  - `models/`: SQLAlchemy ORM models
-  - `routes/`: API endpoints organized by resource
-  - `tests/`: Unit tests for the API
-  - `utils/`: Utility functions and helpers
-- `client/`: Astro/Svelte frontend code
-  - `src/components/`: Reusable Svelte components
-  - `src/layouts/`: Astro layout templates
-  - `src/pages/`: Astro page routes
-  - `src/styles/`: CSS and Tailwind configuration
-- `scripts/`: Development and deployment scripts
-- `data/`: Database files
-- `docs/`: Project documentation
-- `README.md`: Project documentation
+- `server/`: Flask バックエンド
+  - `models/`: SQLAlchemy ORM モデル
+  - `routes/`: リソースごとに整理した API エンドポイント
+  - `tests/`: API のユニットテスト
+  - `utils/`: ユーティリティ
+- `client/`: Astro/Svelte フロントエンド
+  - `src/components/`: 再利用可能な Svelte コンポーネント
+  - `src/layouts/`: Astro のレイアウトテンプレート
+  - `src/pages/`: Astro のページルート
+  - `src/styles/`: CSS / Tailwind の設定
+- `scripts/`: 開発/デプロイスクリプト
+- `data/`: データベースファイル
+- `docs/`: ドキュメント
+- `README.md`: プロジェクトの概要

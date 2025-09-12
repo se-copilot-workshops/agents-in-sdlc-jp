@@ -1,27 +1,27 @@
-# Agents in the software development lifecycle (SDLC)
+# ソフトウェア開発ライフサイクル（SDLC）におけるエージェント活用
 
-The recent additions to the capabilities of GitHub Copilot provide powerful tools to the developer across the entire software development lifecycle (SDLC). This includes working with issues and pull requests on GitHub, interacting with external services, and of course code creation. This lab explores the functionality, providing real-world use cases and tips on how to get the most out of the tools.
+GitHub Copilot の機能拡張により、ソフトウェア開発ライフサイクル（SDLC）の各工程で開発者を強力に支援できるようになりました。GitHub 上の Issue や Pull Request の取り扱い、外部サービスとの連携、そしてもちろんコード生成までを含みます。本ラボでは、これらの機能を実際のユースケースとともに体験し、活用のコツを学びます。
 
-## Lab overview
+## ラボの概要
 
 > [!IMPORTANT]
-> Because GitHub Copilot, and generative AI at large, is probabilistic rather than deterministic, the exact code, files changed, etc., may vary. As a result, you may notice slight difference between screenshots and code snippets in the lab and your experience. This is to be expected, and is just the nature of working with this class of tools.
+> GitHub Copilot をはじめとする生成 AI は決定的（deterministic）ではなく確率的（probabilistic）に動作するため、生成されるコードや変更されるファイルは毎回同一ではありません。そのため、ラボ内のスクリーンショットやコード片と、皆さんの環境での結果に差異が生じることがあります。これは想定どおりで、この種のツールの性質です。
 >
-> If something appears broken or isn't running correctly, please ask a mentor!
+> うまく動かない場合や壊れているように見える場合は、メンターに相談してください。
 
-The labs will walk you through the most common workloads with the agent capabilities of GitHub Copilot.
+このラボでは、GitHub Copilot のエージェント機能でよくあるワークロードを順を追って体験します。
 
-0. [Setup the environment](./0-prereqs.md).
-1. [Assign issues to GitHub Copilot coding agent](./1-copilot-coding-agent.md) to allow Copilot to work on tasks asynchronously.
-2. [Configure and interact with external services](./2-mcp.md) through Model Context Protocol (MCP).
-3. [Provide context to Copilot](./3-custom-instructions.md) through the use of custom instructions, prompt files, and chat participants.
-4. [Complete a site-wide update](./4-copilot-agent-mode-vscode.md) with the help of Copilot agent mode.
-5. [Review Copilot coding agent's work](./5-reviewing-coding-agent.md) to ensure everything looks good!
+0. [環境のセットアップ](./0-prereqs.md)
+1. [Issue を GitHub Copilot coding agent に割り当てる](./1-copilot-coding-agent.md)（非同期で作業を進める）
+2. [Model Context Protocol（MCP）で外部サービスを設定・連携する](./2-mcp.md)
+3. [カスタムインストラクションで Copilot に文脈を与える](./3-custom-instructions.md)（指示ファイル・プロンプトファイル・チャット参加者）
+4. [Copilot Agent Mode を使ってサイト全体の更新を行う](./4-copilot-agent-mode-vscode.md)
+5. [Copilot coding agent の成果をレビューする](./5-reviewing-coding-agent.md)
 
-## Scenario
+## シナリオ
 
-The lab envisions you as a new developer for Tailspin Toys, a fictional company who provides crowdfunding for boardgames with a DevOps theme - a huge market! You are tasked with creating issues to document the desired updates to the application and DevOps flow, then implementing the ability to filter games by both category and publisher. You'll work iteratively, exploring both the site and Copilot's capabilities, to complete the tasks.
+あなたは Tailspin Toys（DevOps をテーマにしたボードゲームのクラウドファンディングを提供する架空の会社）の新任開発者です。アプリケーションや DevOps フローに対する改善点を Issue として記述し、さらに「カテゴリ」と「パブリッシャー」でゲームを絞り込める機能を実装します。サイトと Copilot の機能を行き来しながら、反復的にタスクを進めていきます。
 
-## Get started
+## はじめに
 
-OK, let's [get going by starting with the setup](./0-prereqs.md)!
+まずは[セットアップ](./0-prereqs.md)から始めましょう！

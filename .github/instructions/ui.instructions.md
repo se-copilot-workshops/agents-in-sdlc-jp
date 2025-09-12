@@ -2,8 +2,8 @@
 applyTo: '**/*.svelte,**/*.astro,**/*.css'
 ---
 
-# Style notes
+# スタイルに関する注意
 
-- Use dark mode
-- Controls should have a modern look and feel
-- Rounded corners for any boxes
+- ダークモードを使用する
+- コントロールはモダンな見た目・操作感にする
+- ボックスなどの角は丸める（rounded）

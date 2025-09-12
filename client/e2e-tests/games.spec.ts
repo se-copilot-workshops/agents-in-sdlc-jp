@@ -97,7 +97,7 @@ test.describe('Game Listing and Navigation', () => {
     // Check that the back game button is present
     const backButton = page.locator('[data-testid="back-game-button"]');
     await expect(backButton).toBeVisible();
-    await expect(backButton).toContainText('Support This Game');
+    await expect(backButton).toContainText('このゲームを支援する');
     
     // Verify the button is clickable
     await expect(backButton).toBeEnabled();
@@ -110,7 +110,7 @@ test.describe('Game Listing and Navigation', () => {
     await page.waitForSelector('[data-testid="game-details"]', { timeout: 10000 });
     
     // Find and click the back to all games link
-    const backLink = page.locator('a:has-text("Back to all games")');
+    const backLink = page.locator('a:has-text("ゲーム一覧に戻る")');
     await expect(backLink).toBeVisible();
     await backLink.click();
     
@@ -129,6 +129,6 @@ test.describe('Game Listing and Navigation', () => {
     
     // The page should either show an error or handle it gracefully
     // We expect the page to not crash and still have a valid title
-    await expect(page).toHaveTitle(/Game Details - Tailspin Toys/);
+    await expect(page).toHaveTitle(/ゲーム詳細 - Tailspin Toys/);
   });
 });

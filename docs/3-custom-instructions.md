@@ -1,224 +1,229 @@
-# Exercise 3 - Providing context to Copilot with instruction files
+# 演習 3 - インストラクションファイルで Copilot にコンテキストを与える
 
 
 
-Context is key across many aspects of life, and when working with generative AI. If you're performing a task which needs to be completed a particular way, or if a piece of background information is important, we want to ensure Copilot has access to that information. We can use [instruction files][instruction-files] to provide guidance so that Copilot not only understands what we want it to do but also how we want it to be done.
+人生の多くの側面でも生成 AI でも、コンテキストは鍵です。特定のやり方で完了すべきタスクや、重要な背景情報がある場合、Copilot がその情報にアクセスできるようにしたくなります。[インストラクションファイル][instruction-files] を使うことで、Copilot に「何をしてほしいか」だけでなく「どのようにやってほしいか」も伝えるガイダンスを提供できます。
 
-In this exercise, you will learn how to:
+この演習では次のことを学びます：
 
-- provide Copilot with project-specific context, coding guidelines and documentation standards using custom instructions **.github/copilot-instructions.md**.
-- use instruction files to guide Copilot for repetitive or templated tasks.
-- implement both repository-wide instructions and task-specific instructions.
+- **.github/copilot-instructions.md** というカスタムインストラクションを用いて、プロジェクト固有のコンテキスト、コーディングガイドライン、ドキュメント標準を Copilot に提供する。
+- インストラクションファイルで、反復的またはテンプレート化されたタスクに対する Copilot の挙動を導く。
+- リポジトリ全体のインストラクションと、タスク固有のインストラクションの両方を実装する。
 
-## Scenario
+## シナリオ
 
-As any good dev shop, Tailspin Toys has a set of guidelines and requirements for development practices. These include:
+優れた開発組織である Tailspin Toys には、開発プラクティスに関するガイドラインと要件があります。例えば：
 
-- API always needs unit tests.
-- UI should be in dark mode and have a modern feel.
-- Documentation should be added to code in the form of docstrings and header comments.
+- API には常にユニットテストが必要。
+- UI はダークモードでモダンな印象にする。
+- ドキュメントは docstring やヘッダーコメントの形でコードに追加する。
 
-Through the use of instruction files you'll ensure Copilot has the right information to perform the tasks in alignment with the practices highlighted.
+インストラクションファイルを用いることで、ここで強調したプラクティスに沿ってタスクを実行できるよう、Copilot に正しい情報を確実に与えます。
 
-## Before you begin
+## 始める前に
 
-We're going to be making some code changes, so we should follow our usual practice of creating a new branch to work in. This will allow us to make changes without affecting the main branch until we're ready.
+これからコードを変更するので、通常どおり作業用の新しいブランチを作成しましょう。これにより、準備が整うまで main ブランチへ影響を与えずに変更できます。
 
-1. Return to your codespace from the previous exercise.
-2. Open a new terminal window inside your codespace by selecting <kbd>Ctl</kbd>+<kbd>\`</kbd>.
-3. Create and switch to a new branch by running the following command in the terminal:
+1. 前の演習で使った Codespace に戻ります。
+2. Codespace 内で <kbd>Ctl</kbd>+<kbd>\`</kbd> を押して新しいターミナルウィンドウを開きます。
+3. 次のコマンドをターミナルで実行して、新しいブランチを作成・切り替えます：
 
    ```bash
    git checkout -b add-filters
    ```
 
-## Custom instructions
+## カスタムインストラクション
 
-Custom instructions allow you to provide context and preferences to Copilot chat, so that it can better understand your coding style and requirements. This is a powerful feature that can help you steer Copilot to get more relevant suggestions and code snippets. You can specify your preferred coding conventions, libraries, and even the types of comments you like to include in your code. You can create instructions for your entire repository, or for specific types of files for task-level context.
+カスタムインストラクションを使うと、あなたのコーディングスタイルや要件を Copilot Chat に伝えられます。これは強力な機能で、より関連性の高い提案やコードスニペットを Copilot から引き出す助けになります。好みのコーディング規約、ライブラリ、コメントのスタイルなども指定できます。リポジトリ全体向けのインストラクションも作れますし、タスクレベルのコンテキストとして特定種類のファイル向けに作ることもできます。
 
-There are two types of instructions files:
+インストラクションファイルには 2 種類あります：
 
-- **.github/copilot-instructions.md**, a single instruction file sent to Copilot for **every** chat prompt. This file should contain project-level information, context which is relevant for every message. This could include the tech stack being used, an overview of what's being built, or global guidance for Copilot.
-- **\*.instructions.md** files can be created for specific tasks or file types. You can use **.instructions.md** files to provide guidelines for particular languages (like Python or TypeScript), or for tasks like creating a React component or a new instance of a repository pattern.
+* **.github/copilot-instructions.md**：**すべて**のチャットプロンプトに対して Copilot に送られる単一のインストラクションファイル。プロジェクトレベルの情報や、すべてのメッセージに関連するコンテキストを含めます。使用する技術スタック、作っているものの概要、Copilot への全体的な指針などが該当します。
+* **\*.instructions.md**：特定のタスクやファイル種別向けに作成できます。例えば（Python や TypeScript など）特定言語向けのガイドや、React コンポーネントの作成、リポジトリパターンの新規実装といったタスク向けのガイドラインに使えます。
 
 > [!NOTE]
-> When working in your IDE, instructions files are only used for code generation in Copilot Chat, and not used for code completions.
+> IDE で作業する際、インストラクションファイルは Copilot Chat による**コード生成**にのみ使われ、コード補完には使われません。
 
-## Use GitHub Copilot Chat before updating custom instructions
+## カスタムインストラクションを更新する前に Copilot Chat を使ってみる
 
-To see the impact of custom instructions, we will start by sending a prompt with the current version of the files. We'll then make some updates, send the same prompt again, and note the difference.
+カスタムインストラクションの効果を見るため、まず現状のファイルでプロンプトを送ってみます。その後、更新を行い、同じプロンプトを再送して違いを確認します。
 
-1. Return to your codespace.
-2. Close any open files in your codespace from the previous exercises. This will ensure Copilot has the context we want it to have.
-3. Open **server/routes/publishers.py**, an empty file.
-4. Open **Copilot chat** by selecting the Copilot icon towards the top of your codespace.
-5. Create a new chat session by selecting the **New Chat** button, which will remove any previous context.
+1. Codespace に戻ります。
+2. 意図したコンテキストだけを Copilot に渡すため、前の演習で開いていたファイルをすべて閉じます。
+3. **server/routes/publishers.py**（空のファイル）を開きます。
+4. Codespace 上部の Copilot アイコンから **Copilot chat** を開きます。
+5. **New Chat** ボタンを選び、新しいチャットセッションを作成します（これで以前のコンテキストが消えます）。
 
-   ![Screenshot of the New Chat button being highlighted in the Copilot Chat panel](images/copilot-new-chat.png)
+   ![Copilot Chat パネルで New Chat ボタンをハイライトしたスクリーンショット](images/copilot-new-chat.png)
 
-6. Select **Ask** from the modes dropdown.
+6. モードのドロップダウンから **Ask** を選択します。
 
-   ![Screenshot of the Ask mode being highlighted in the Copilot Chat panel](images/copilot-chat-ask.png)
+   ![Copilot Chat パネルで Ask モードをハイライトしたスクリーンショット](images/copilot-chat-ask.png)
 
-7. Send the following prompt to create a new endpoint to return all publishers:
+7. すべての Publisher を返す新規エンドポイントを作成するため、次のプロンプトを送信します：
 
    ```plaintext
-   Create a new endpoint to return a list of all publishers. It should return the name and id for all publishers.
+   すべてのパブリッシャーのリストを返す新しいエンドポイントを作成してください。このエンドポイントはすべてのパブリッシャーの名前とidを返す必要があります。
    ```
 
-8. Notice the generated code includes [type hints][python-type-hints] because, as we'll see, our custom instructions includes the directive to include them.
-9. Notice the generated code **is missing** either a docstring or a comment header - or both!
+8. 生成されたコードには [型ヒント][python-type-hints] が含まれていることに気づくはずです。これは（後で見るように）カスタムインストラクションに型ヒントを含める指示があるためです。
+9. 一方で、docstring やコメントヘッダーが **欠けている**（あるいは両方欠けている）ことにも注意してください。
 
 > [!IMPORTANT]
-> As highlighted previously, GitHub Copilot and LLM tools are probabilistic, not deterministic. As a result, the exact code generated may vary, and there's even a chance it'll abide by our rules without us spelling it out! But to aid consistency in code we should always document anything we want to ensure Copilot should understand about how we want our code generated.
+> 先に強調したとおり、GitHub Copilot や LLM ツールは確率的であり決定論的ではありません。そのため、生成されるコードは毎回同じとは限りませんし、明示しなくてもこちらのルールを守る場合さえあります！とはいえ、コードの一貫性のため、Copilot に「コード生成の方針」を理解させたい事項は常にドキュメント化しておくべきです。
 
-## Add global standards to copilot-instructions.md
+## copilot-instructions.md にグローバル標準を追加する
 
-As highlighted previously, **copilot-instructions.md** is designed to provide project-level information to Copilot. Let's ensure global coding standards are documented to improve code suggestions from Copilot chat.
+前述のとおり、**copilot-instructions.md** はプロジェクトレベルの情報を Copilot に与えるためのファイルです。Copilot Chat の提案品質を高めるため、グローバルなコーディング標準を文書化しましょう。
 
-1. Return to your codespace.
-2. Open **.github/copilot-instructions.md**.
-3. Explore the file, noting the brief description of the project and sections for **Code standards**, **Scripts** and **GitHub Actions Workflows**. These are applicable to any interactions we'd have with Copilot, are robust, and provide clear guidance on what we're doing and how we want to accomplish it.
-4. Locate the **Code formatting requirements** section, which should be around line 16. Note how it contains a note to use type hints. That's why we saw those in the code generated previously.
-5. Add the following lines of markdown right below the note about type hints to instruct Copilot to add comment headers to files and docstrings:
+1. Codespace に戻ります。
+2. **.github/copilot-instructions.md** を開きます。
+3. プロジェクトの簡単な説明や **Code standards**、**Scripts**、**GitHub Actions Workflows** のセクションがあることを確認します。これらは Copilot とのあらゆるやり取りに当てはまり、堅牢で、何をどう進めたいかの明確な指針になります。
+4. 16 行目付近にある **Code formatting requirements** セクションを探し、型ヒント使用の注意が含まれていることを確認します。先ほどのコードに型ヒントがあったのはこのためです。
+5. 型ヒントに関する注意の直下に、Copilot にファイル先頭コメントと docstring の追加を指示する次の行を追記します：
 
    ```markdown
-   - Every function should have docstrings or the language equivalent
-   - Before imports or any code, add a comment block that explains the purpose of the file.
+   - すべての関数はdocstring、またはその言語における同等のものを持つべきです。
+   - インポートやコードの前に、ファイルの目的を説明するコメントブロックを追加してください。
    ```
 
-6. Close **copilot-instructions.md**.
-7. Select **New Chat** in Copilot chat to clear the buffer and start a new conversation.
-8. Return to **server/routes/publishers.py** to ensure focus is set correctly.
-9.  Send the same prompt as before to create the endpoint.
+6. **copilot-instructions.md** を閉じます。
+7. Copilot Chat で **New Chat** を選択し、バッファをクリアして新しい会話を開始します。
+8. フォーカスが正しく当たるよう **server/routes/publishers.py** に戻ります。
+9. 先ほどと同じプロンプトを送信して、エンドポイントを作成します。
 
    ```plaintext
-   Create a new endpoint to return a list of all publishers. It should return the name and id for all publishers.
+   すべてのパブリッシャーのリストを返す新しいエンドポイントを作成してください。このエンドポイントはすべてのパブリッシャーの名前とidを返す必要があります。
    ```
 
 > [!TIP]
-> You can cycle through previous prompts by using the up and down arrows on your keyboard.
+> キーボードの上下矢印で以前のプロンプトを巡回できます。
 
-8. Notice how the newly generated code includes a comment header at the top of the file which resembles the following:
+8. 今回生成されたコードでは、ファイル先頭に次のようなコメントヘッダーが含まれていることに注目してください：
 
    ```python
    """
-   Publisher API routes for the Tailspin Toys Crowd Funding platform.
-   This module provides endpoints to retrieve publisher information.
+   Publisher APIは Tailspin Toys Crowd Funding platform のルートです。
+   このモジュールはパブリッシャー情報を取得するためのエンドポイントを提供します。
    """
    ```
 
-9.  Notice how the newly generated code includes a docstring inside the function which resembles the following:
+9. さらに、関数内に次のような docstring が含まれていることにも注目してください：
 
    ```python
    """
-   Returns a list of all publishers with their id and name.
-    
+   すべてのパブリッシャーのリストを返すエンドポイント
+ 
    Returns:
-      Response: JSON response containing an array of publisher objects
+      Response: パブリッシャーオブジェクトの配列を含むJSONレスポンス
    """
    ```
 
-10. Also note how the existing code isn't updated, but of course we could ask Copilot to perform that operation if we so desired!
+10. 既存コードは自動更新されていませんが、必要なら Copilot に更新を依頼できます。
 
-11. **Don't implement the suggested changes**, as we will be doing that in the next section.
+11. **この時点では提案の適用はしません**。次のセクションで実施します。
 
-From this section, you explored how the custom instructions file has provided Copilot with the context it needs to generate code that follows the established guidelines.
+このセクションでは、カスタムインストラクションファイルが、確立したガイドラインに従うコードを生成するためのコンテキストを Copilot に与えていることを確認しました。
 
-## Instruction files for tasks
+## タスク向けインストラクションファイル
 
-Coding is often repetitive, with developers performing similar tasks on a regular basis. Copilot is wonderful for allowing you to offload these types of tasks. But these types of tasks, like adding an endpoint, creating a component, or adding a new service pattern implementation often require a particular template or structure to be followed. Instruction files allow you to provide specific requirements for these types of tasks. They can be added manually when using Copilot Chat, or can have an **applyTo:** tag added to the top of the file to have Copilot automatically use them for specific files.
+コーディングには反復作業がつきものです。Copilot はこうした作業の肩代わりに最適です。しかし、エンドポイントの追加、コンポーネント作成、新しいサービスパターンの実装など、多くの作業は特定のテンプレートや構造に従う必要があります。インストラクションファイルを使うと、こうしたタスク向けの具体的な要件を提示できます。手動で Copilot Chat に追加することも、ファイル先頭に **applyTo:** タグを付けて特定ファイルに自動適用させることもできます。
 
-We want to create a new endpoint to list all publishers, and to follow the same pattern we used for the existing [games endpoints][games-endpoints], and to create tests which follow the same pattern as the existing [games endpoints tests][games-tests]. An instruction file has already been created; let's explore it and see the difference in code it generates.
+今回は、既存の [games エンドポイント][games-endpoints] と同じパターンで Publisher 一覧の新規エンドポイントを作成し、テストも既存の [games エンドポイントのテスト][games-tests] と同じパターンに従って作成します。すでにインストラクションファイルが用意されているので、これを確認し、生成コードの違いを見てみましょう。
 
-1. Open **.github/instructions/python-tests.instructions.md**.
-2. Note the **applyTo:** section at the top, which contains a filter for all files in the **server/tests** directory which start with **test_** and have a **.py** extension. Whenever Copilot Chat interacts with a file which matches this pattern it will automatically use the guidance provided in this file.
-3. Note the file contains guidance about how tests should be created, and how to utilize SQLite when testing database functionality.
-4. Open **.github/instructions/flask-endpoint.instructions.md**.
-5. Review the following entries inside the instruction file, which includes:
+1. **.github/instructions/python-tests.instructions.md** を開きます。
 
-   - an overview of requirements, including that tests must be created, and endpoints are created in Flask using blueprints.
-   - a link to another the previously mentioned **python-tests.instructions.md** file.
-   - links to two existing files which follow the patterns we want - both the games blueprint and tests. Notice how these are setup as normal markdown links, allowing an instruction file to incorporate additional files for context.
+2. 先頭の **applyTo:** セクションに注目します。これは **server/tests** ディレクトリ配下で **test\_** で始まり **.py** 拡張子を持つファイルすべてを対象とするフィルターです。Copilot Chat がこのパターンに一致するファイルとやり取りする際、このファイルのガイダンスが自動的に使用されます。
 
-6. Return to **server/routes/publishers.py** to ensure focus is set correctly.
-7. Return to Copilot Chat and select **New Chat** to start a new session.
-8. Select **Edit** from the mode dropdown, which will allow Copilot to update multiple files. 
+3. このファイルには、テストの作り方や、データベース機能のテスト時に SQLite を利用する方法のガイダンスが含まれていることを確認します。
 
-   ![Screenshot of the Edit mode being highlighted in the Copilot Chat panel](images/copilot-edits.png)
+4. **.github/instructions/flask-endpoint.instructions.md** を開きます。
+
+5. 次の内容を確認します：
+
+   * 必要要件の概要（テスト必須、Flask の blueprint を用いてエンドポイントを作成する、など）。
+   * 先ほどの **python-tests.instructions.md** へのリンク。
+   * 目標とするパターンに従った既存の 2 つのファイル（games の blueprint とテスト）へのリンク。通常の Markdown リンクとして設定されており、インストラクションファイルが追加のファイルをコンテキストに取り込めるようになっています。
+
+6. フォーカスが正しく当たるよう **server/routes/publishers.py** に戻ります。
+7. Copilot Chat に戻り、**New Chat** を選択して新しいセッションを開始します。
+8. モードのドロップダウンから **Edit** を選択します。これで Copilot が複数ファイルを更新できるようになります。
+
+   ![Copilot Chat パネルで Edit モードをハイライトしたスクリーンショット](images/copilot-edits.png)
 
 > [!NOTE]
-> If you have any issues running the tests in this part of the exercise, please undo your changes and retry from the above step using **Agent** mode instead.
+> このパートでテストの実行に問題が出た場合は、変更を元に戻し、上の手順から **Agent** モードでやり直してください。
 
-9. Select the **Add Context** button to open the context dialog
-10. If prompted to allow the codespace to see text and images copied to the clipboard, select **Allow**.
-11. Select **Instructions** from the dropdown at the top of your codespace.
+9. **Add Context** ボタンを選択してコンテキストダイアログを開きます。
+10. クリップボードのテキストや画像へのアクセス許可を求められたら **Allow** を選択します。
+11. Codespace 上部のドロップダウンから **Instructions** を選択します。
 
 > [!TIP]
-> If the list of options is long, you can type **instructions** to filter to the Instructions option then select **Instructions**.
+> 候補が多い場合は **instructions** と入力して絞り込み、**Instructions** を選択できます。
 
-12.  Select **flask-endpoint .github/instructions** to add the instruction file to the context.
+12. **flask-endpoint .github/instructions** を選択して、インストラクションファイルをコンテキストに追加します。
 
-   ![Screenshot showing the instruction file being added into Copilot Chat](images/copilot-add-instructions-file.png)
+   ![インストラクションファイルを Copilot Chat に追加する様子のスクリーンショット](images/copilot-add-instructions-file.png)
 
-13. Send the same prompt as before to generate the desired endpoint:
+13. 先ほどと同じプロンプトを送って、目的のエンドポイントを生成します：
 
    ```plaintext
-   Create a new endpoint to return a list of all publishers. It should return the name and id for all publishers.
+   すべてのパブリッシャーのリストを返す新しいエンドポイントを作成してください。このエンドポイントはすべてのパブリッシャーの名前とidを返す必要があります。
    ```
 
-14. Note the **References** section and how it uses the **flask-endpoint.instructions.md** file to provide context. If you use instructions files with Copilot agent mode, you will notice that Copilot explores and reads the files referenced in the instructions file.
+14. **References** セクションに注目し、**flask-endpoint.instructions.md** がコンテキストとして使われていることを確認します。エージェントモードでインストラクションファイルを使うと、Copilot はその中で参照されるファイルを探索・読込します。
 
-   ![Screenshot of the references section, showing the included instructions file](./images/copilot-instructions-references.png)
+   ![参照セクションにインストラクションファイルが含まれている様子のスクリーンショット](./images/copilot-instructions-references.png)
 
-15. Copilot generates the files. Notice how it generates updates across multiple files, like **publishers.py** and **test_publishers.py**
+15. Copilot がファイルを生成します。**publishers.py** や **test\_publishers.py** など、複数ファイルにわたり更新が生成される点に注目してください。
 
 > [!NOTE]
-> Note that the code generated may diverge from some of the standards we set. AI tools like Copilot are non-deterministic, and may not always provide the same result. The other files in our codebase do not contain docstrings or comment headers, which could lead Copilot in another direction. Consistency is key, so making sure that your code follows the established patterns is important. You can always follow-up in chat and ask Copilot to follow your coding standards, which will help guide it in the right direction.
+> 生成コードが、設定した標準から一部逸れることがあります。Copilot のような AI ツールは非決定的で、常に同じ結果にはなりません。コードベースの他のファイルに docstring やコメントヘッダーがないと、Copilot が別の方向に誘導される可能性もあります。一貫性が重要です。確立されたパターンにコードが従っているか確認しましょう。チャットで追記指示を出し、コーディング標準に従うよう求めれば、より正しい方向に導けます。
 
-16. After reviewing the code, select **Keep** in Copilot Chat to accept the changes.
-17. Open a terminal window by selecting <kbd>Ctl</kbd>+<kbd>\`</kbd>.
-18. Run the tests by running the script with the following command:
+16. コードを確認したら、Copilot Chat で **Keep** を選択して変更を受け入れます。
+17. <kbd>Ctl</kbd>+<kbd>\`</kbd> でターミナルを開きます。
+18. 次のコマンドでスクリプトを実行し、テストを実行します：
 
    ```sh
    ./scripts/run-server-tests.sh
    ```
 
-19. You may see an error message stating that **Permission denied**. This is something that our friendly Copilot can assist with. Start a new Chat in the Copilot Chat window and switch to **Agent** mode. Enter the following prompt and press Enter.
-   
+19. **Permission denied** というエラーメッセージが表示される場合があります。これは Copilot に助けてもらいましょう。Copilot Chat で新しいチャットを開始し、**Agent** モードに切り替え、次のプロンプトを入力して Enter を押します。
+
    ```plaintext
-   Execute the run-server-tests.sh command
+   run-server-tests.sh コマンドを実行してください。
    ```
-Copilot will provide one or two suggestions with the correct one including the chmod commands to fix the missing permissions!
 
-20. Once the code is correct, and all tests pass, open the **Source Control** panel on the left of the Codespace and review the changes made by Copilot.
-21. Stage the changes by selecting the **+** icon in the **Source Control** panel.
-22. Generate a commit message using the **Sparkle** button.
+Copilot は 1～2 個の提案を返し、その中の正解には不足している実行権限を修正する chmod コマンドが含まれているはずです！
 
-    ![Screenshot of the Source Control panel showing the changes made](images/source-control-changes.png)
+20. コードが正しく、すべてのテストがパスしたら、Codespace 左側の **Source Control** パネルを開き、Copilot による変更を確認します。
+21. **Source Control** パネルで **+** アイコンを選択して変更をステージします。
+22. **Sparkle** ボタンでコミットメッセージを自動生成します。
 
-22. Commit the changes to your repository by selecting **Commit**.
+    ![変更内容を表示する Source Control パネルのスクリーンショット](images/source-control-changes.png)
 
-## Summary and next steps
+23. **Commit** を選択してリポジトリにコミットします。
 
-Congratulations! You explored how to ensure Copilot has the right context to generate code following the practices your organization has set forth. This can be done at a repository level with the **.github/copilot-instructions.md** file, or on a task basis with instruction files. You explored how to:
+## まとめと次のステップ
 
-- provide Copilot with project-specific context, coding guidelines and documentation standards using custom instructions (.github/copilot-instructions.md).
-- use instruction files to guide Copilot for repetitive or templated tasks.
-- implement both repository-wide instructions and task-specific instructions.
+おめでとうございます！組織で定めたプラクティスに従うコードを生成できるよう、Copilot に適切なコンテキストを与える方法を体験しました。これは、**.github/copilot-instructions.md** によるリポジトリレベルでも、インストラクションファイルによるタスク単位でも実現できます。ここで学んだのは次のとおりです：
 
-Next we'll use [agent mode to add functionality to the site][next-lesson].
+* カスタムインストラクション（.github/copilot-instructions.md）で、プロジェクト固有のコンテキスト、コーディングガイドライン、ドキュメント標準を Copilot に提供する。
+* インストラクションファイルで、反復作業やテンプレート化タスクのガイダンスを行う。
+* リポジトリ全体とタスク固有の両インストラクションを実装する。
 
-## Resources
+次は [エージェントモードでサイトに機能を追加][next-lesson] します。
 
-- [Instruction files for GitHub Copilot customization][instruction-files]
-- [Best practices for creating custom instructions][instructions-best-practices]
-- [Personal custom instructions for GitHub Copilot][personal-instructions]
+## リソース
+
+* [GitHub Copilot のカスタマイズ向けインストラクションファイル][instruction-files]
+* [カスタムインストラクション作成のベストプラクティス][instructions-best-practices]
+* [GitHub Copilot の個人カスタムインストラクション][personal-instructions]
 
 ---
- Click the following link to move onto the next exercise.
- [Next exercise: Adding new functionality with Copilot Agent Mode](./4-copilot-agent-mode-vscode.md)
- 
+
+次の演習に進むには以下のリンクをクリックしてください。
+[次の演習：Copilot Agent Mode で新機能を追加する](./4-copilot-agent-mode-vscode.md)
 
 [previous-lesson]: ./2-mcp.md
 [next-lesson]: ./4-copilot-agent-mode-vscode.md

@@ -1,47 +1,47 @@
-# Exercise 0: Prerequisites
+# 演習 0: 事前準備
 
-Before we get started on the lab, there's a few tasks we need to complete to get everything ready. We need to get a copy of the repository which includes the code, then spin up a [codespace](https://github.com/features/codespaces) to use to create our code.
+ラボを始める前に、いくつかの準備を行います。コードを含むリポジトリのコピーを作成し、開発で使用する [Codespaces](https://github.com/features/codespaces) を起動します。
 
-## Setting up the Lab Repository
+## ラボ用リポジトリの作成
 
-To create a copy of the repository for the code you'll create an instance from the [template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository). The new instance will contain all of the necessary files for the lab, and you'll use it as you work through the exercises. 
+このラボで使うコードのコピーは、リポジトリの[テンプレート機能](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository)を使って作成します。作成したリポジトリにはラボに必要なファイルがすべて含まれ、以降の演習で利用します。
 
-1. In a new browser window, navigate to the GitHub repository for this lab: `https://github.com/se-copilot-workshops/agents-in-sdlc`. You should sign into GitHub using your own GitHub handle.
-2. Create your own copy of the repository by selecting the **Use this template** button on the lab repository page. Then select **Create a new repository**.
+1. 新しいブラウザタブで、このラボの GitHub リポジトリにアクセスします: `https://github.com/se-copilot-workshops/agents-in-sdlc-jp`。ご自身のアカウントでサインインしてください。
+2. リポジトリページの **Use this template** をクリックし、**Create a new repository** を選びます。
 
-    ![Use this template button](images/use-template.png)
+    ![Use this template ボタン](images/use-template.png)
 
 > [!IMPORTANT]
-> Select **se-copilot-workshops** as the owner and use your GitHub handle for the repository name. 
+> Ownerは **se-copilot-workshops** を選び、リポジトリ名にはご自身の GitHub ハンドルを使用してください。
 
-3. Select **se-copilot-workshops** as the owner and name your GitHub handle for the repository name. This ensures you will get access to the Copilot coding agent and can assign issues to Copilot.
+3. Ownerに **se-copilot-workshops** を選び、リポジトリ名にご自身の GitHub ハンドルを設定します。これにより Copilot coding agent へのアクセスや、Issue を Copilot に割り当てる操作が可能になります。
 
-    ![Input the repository template settings](images/repository-template-settings.png)
+    ![テンプレートの作成設定](images/repository-template-settings.png)
 
-4. Click the **Create repository** button
-5. Make a note of the repository path you created (**se-copilot-workshops/**___GHhandle___), as you will be referring to this later in the lab.
+4. **Create repository** をクリックします。
+5. 作成したリポジトリのパス（例: **se-copilot-workshops/**___GHhandle___）をメモしておいてください。後の演習で参照します。
 
-## Creating a codespace
+## Codespace の作成
 
-Next up, we will be using a codespace to complete the lab exercises. [GitHub Codespaces](https://github.com/features/codespaces) are a cloud-based development environment that allows you to write, run, and debug code directly in your browser. It provides a fully-featured IDE with support for multiple programming languages, extensions, and tools.
+続いて、演習を進めるための Codespace を作成します。[GitHub Codespaces](https://github.com/features/codespaces) は、ブラウザ上でコードの作成・実行・デバッグができるクラウドベースの開発環境です。複数言語や拡張、各種ツールに対応した IDE を提供します。
 
-1. Navigate to your newly created repository.
-2. Select the green **Code** button.
+1. 先ほど作成したリポジトリを開きます。
+2. 緑色の **Code** ボタンをクリックします。
 
-    ![Select the Code button](images/code-button.png)
+    ![Code ボタン](images/code-button.png)
 
-3. Select the **Codespaces** tab and select the **+** button to create a new Codespace.
- (**TIP:** Keep reading ahead. Don't wait for the codespace to complete)
+3. **Codespaces** タブを開き、**+** ボタンを押して新規 Codespace を作成します。
+   （**TIP:** 作成完了を待たず、次の手順を読み進めて構いません）
 
-    ![Create a new codespace](images/create-codespace.png)
+    ![新しい Codespace の作成](images/create-codespace.png)
 
-The creation of the codespace will take several minutes, although it's still far quicker than having to manually install all the services! That said, we can use this time to take advantage of our ability to assign tasks to GitHub Copilot which it can perform asynchronously, which we'll turn our attention to next!
+Codespace の作成には数分かかります（それでも各種サービスを手動でインストールするよりはずっと速いです）。この待ち時間を活用して、GitHub Copilot に非同期で任せられるタスクの準備を進めましょう。
 
-## Summary
+## まとめ
 
-Congratulations, you have created a copy of the lab repository! You also began the creation process of your codespace, which you'll use when you begin writing code. We're going to return back to this after the next lesson, so don't worry.
+お疲れさまでした。ラボ用リポジトリのコピーを作成し、以降で使用する Codespace の作成も開始できました。次のレッスンの後で、再びこの環境に戻って作業を続けます。
 
-## Next step
+## 次のステップ
 
-Since we've got a few minutes, let's get Copilot working on some tasks asynchronously for us! We can do this by creating issues and assigning them to Copilot coding agent. Click the following link to move onto the next exercise.
-[Next exercise: Copilot Coding Agent](./1-copilot-coding-agent.md)
+数分の余裕があるうちに、Copilot に非同期タスクを任せる準備を進めましょう。Issue を作成し、Copilot coding agent に割り当てます。次の演習へ進むには以下をクリックしてください。
+[次の演習: Copilot Coding Agent](./1-copilot-coding-agent.md)
