@@ -189,7 +189,7 @@ Copilot は現在、あなたのリクエストに対して着実に作業中で
 ---
 
  次の演習に進むには以下をクリックしてください。
- [次の演習: Copilot Agent Mode と GitHub MCP Server でバックログを整える](./2-mcp.md)
+ [次の演習: Copilot Agent Mode と GitHub MCP Server でバックログを準備する](./2-mcp.md)
 
 [coding-agent-overview]: https://docs.github.com/en/copilot/using-github-copilot/coding-agent/about-assigning-tasks-to-copilot#overview-of-copilot-coding-agent
 [coding-agent-mcp]: https://docs.github.com/en/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp
