@@ -101,8 +101,8 @@ GitHub Copilot Chat のエージェントモードにアクセスするには、
     {
         "servers": {
             "github": {
-            "type": "http",
-            "url": "https://api.githubcopilot.com/mcp/"
+                "type": "http",
+                "url": "https://api.githubcopilot.com/mcp/"
             }
         }
     }
