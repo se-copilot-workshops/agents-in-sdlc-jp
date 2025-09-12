@@ -46,7 +46,7 @@ Copilot のエージェントモードは、より自律的に動作するよう
 > [!NOTE]
 > [http://localhost:5100](http://localhost:5100) をブラウザで開くかどうか尋ねるダイアログが出たら、**x** を選んで閉じてください。
 
-4. ターミナルに表示されたクライアントのアドレス（[http://localhost:4321）を](http://localhost:4321）を) <kbd>Ctrl</kbd>-**クリック**（Mac の場合は <kbd>Cmd</kbd>-**クリック**）してサイトを開きます。
+4. ターミナルに表示されたクライアントのアドレス（[http://localhost:4321](http://localhost:4321)）を <kbd>Ctrl</kbd>-**クリック**（Mac の場合は <kbd>Cmd</kbd>-**クリック**）してサイトを開きます。
 
 > [!NOTE]
 > Codespace では、ターミナルの localhost リンクを選択すると自動的に `https://<your-codespace-name>-4321.app.github.dev/` にリダイレクトされます。これは Web サーバーをホストしているあなたの Codespace へのプライベートトンネルです。
