@@ -1,14 +1,15 @@
 name: "Copilot Setup Steps"
 
-# Allows you to test the setup steps from your repository's "Actions" tab
+# リポジトリの Actions タブからセットアップ手順を試すためのトリガー
 on: workflow_dispatch
 
 jobs:
   copilot-setup-steps:
     runs-on: ubuntu-latest
-    # Set the permissions to the lowest permissions possible needed for *your steps*. Copilot will be given its own token for its operations.
+    # 必要最低限の権限を設定します。Copilot の操作には Copilot 専用のトークンが付与されます。
     permissions:
-      # If you want to clone the repository as part of your setup steps, for example to install dependencies, you'll need the `contents: read` permission. If you don't clone the repository in your setup steps, Copilot will do this for you automatically after the steps complete.
+      # 依存関係のインストールなどでセットアップ中にリポジトリをクローンする場合は `contents: read` が必要です。
+      # セットアップでクローンしない場合は、この手順の後で Copilot が自動的に行います。
       contents: read
     steps:
       - name: Checkout code
