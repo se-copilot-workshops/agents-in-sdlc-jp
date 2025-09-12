@@ -11,7 +11,10 @@
         "ms-python.vscode-pylance",
         "svelte.svelte-vscode",
         "astro-build.astro-vscode"
-      ]
+      ],
+      "settings": {
+        "github.copilot.chat.localeOverride": "ja"
+      }
     }
   },
   "features": {
