@@ -12,7 +12,7 @@ test.describe('Home Page', () => {
     await page.goto('/');
     
     // Check that the main heading is present
-    const mainHeading = page.locator('h1').first();
+    const mainHeading = page.locator('h1.text-4xl');
     await expect(mainHeading).toHaveText('Tailspin Toys へようこそ');
   });
 
